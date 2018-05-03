@@ -84,31 +84,31 @@ while carryOn:
     
     # Buttons
     # Play button
-    if SCREENWIDTH/3-50 < mouse[0] < SCREENWIDTH/3+50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 and click[0] == 1:
-        pygame.draw.rect(screen, ORANGE, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
-        print('Les go')
-    elif SCREENWIDTH/3-50 < mouse[0] < SCREENWIDTH/3+50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50:
-        pygame.draw.rect(screen, BRIGHT_GREEN, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
-    else:
-        pygame.draw.rect(screen, GREEN, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
-
-     # Options button
-    if SCREENWIDTH * 2/3 - 50 < mouse[0] < SCREENWIDTH * 2/3 + 50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 and click [0] == 1 :
-        pygame.draw.rect(screen, ORANGE, (SCREENWIDTH*2/3-50, SCREENHEIGHT/2, 100, 50))
-        print ("Options")
-    elif SCREENWIDTH * 2/3 - 50 < mouse[0] < SCREENWIDTH * 2/3 + 50 and  SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 :
-        pygame.draw.rect (screen, BRIGHT_BLUE, (SCREENWIDTH * 2/3 - 50, SCREENHEIGHT/2, 100, 50))
-    else :
-       pygame.draw.rect (screen, BLUE, (SCREENWIDTH * 2/3 - 50, SCREENHEIGHT/2, 100, 50))
-
-    # Quit button
-    if SCREENWIDTH/2 - 50 < mouse[0] < SCREENWIDTH/2 + 50 and SCREENHEIGHT * 2/3 < mouse[1] < SCREENHEIGHT * 2/3 +50 and click[0] == 1 :
-        pygame.draw.rect (screen, ORANGE, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
-        print ("Quit")
-    elif SCREENWIDTH/2 - 50 < mouse[0] < SCREENWIDTH/2 + 50  and SCREENHEIGHT * 2/3 < mouse[1] < SCREENHEIGHT * 2/3 +50 :
-       pygame.draw.rect (screen, BRIGHT_RED, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
-    else :
-       pygame.draw.rect (screen, RED, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
+##    if SCREENWIDTH/3-50 < mouse[0] < SCREENWIDTH/3+50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 and click[0] == 1:
+##        pygame.draw.rect(screen, ORANGE, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
+##        print('Les go')
+##    elif SCREENWIDTH/3-50 < mouse[0] < SCREENWIDTH/3+50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50:
+##        pygame.draw.rect(screen, BRIGHT_GREEN, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
+##    else:
+##        pygame.draw.rect(screen, GREEN, (SCREENWIDTH/3-50, SCREENHEIGHT/2, 100, 50))
+##
+##     # Options button
+##    if SCREENWIDTH * 2/3 - 50 < mouse[0] < SCREENWIDTH * 2/3 + 50 and SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 and click [0] == 1 :
+##        pygame.draw.rect(screen, ORANGE, (SCREENWIDTH*2/3-50, SCREENHEIGHT/2, 100, 50))
+##        print ("Options")
+##    elif SCREENWIDTH * 2/3 - 50 < mouse[0] < SCREENWIDTH * 2/3 + 50 and  SCREENHEIGHT/2 < mouse[1] < SCREENHEIGHT/2 + 50 :
+##        pygame.draw.rect (screen, BRIGHT_BLUE, (SCREENWIDTH * 2/3 - 50, SCREENHEIGHT/2, 100, 50))
+##    else :
+##       pygame.draw.rect (screen, BLUE, (SCREENWIDTH * 2/3 - 50, SCREENHEIGHT/2, 100, 50))
+##
+##    # Quit button
+##    if SCREENWIDTH/2 - 50 < mouse[0] < SCREENWIDTH/2 + 50 and SCREENHEIGHT * 2/3 < mouse[1] < SCREENHEIGHT * 2/3 +50 and click[0] == 1 :
+##        pygame.draw.rect (screen, ORANGE, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
+##        print ("Quit")
+##    elif SCREENWIDTH/2 - 50 < mouse[0] < SCREENWIDTH/2 + 50  and SCREENHEIGHT * 2/3 < mouse[1] < SCREENHEIGHT * 2/3 +50 :
+##       pygame.draw.rect (screen, BRIGHT_RED, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
+##    else :
+##       pygame.draw.rect (screen, RED, (SCREENWIDTH/2 - 50, SCREENHEIGHT * 2/3, 100, 50))
 
     if Button.level == 1:
         for Button.button in Button.level1_buttons:

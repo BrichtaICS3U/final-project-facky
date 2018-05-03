@@ -28,7 +28,7 @@ class Button():
        font_name = name of font
        font_size = size of font
     """
-    def __init__(self, txt, location, action, bg=WHITE, fg=BLACK, size=(80, 30), font_name="Segoe Print", font_size=16):
+    def __init__(self, txt, location, action, bg=WHITE, fg=BLACK, size=(150, 75), font_name="Segoe Print", font_size=40):
         self.color = bg  # the static (normal) color
         self.bg = bg  # actual background color, can change on mouseover
         self.fg = fg  # text color
@@ -94,7 +94,7 @@ def my_sound_function():
 def my_sound_on_function():
     """A function that retreats to the previous level"""
     global level
-    level += 1
+    level += 0
 
 def my_sound_off_function():
     """A function that retreats to the previous level"""
@@ -153,7 +153,7 @@ clock = pygame.time.Clock()
 
 #create button objects
 button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function) #level 1
-button_02 = Button("Previous", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function) #level 3
+button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function) #level 3
 button_03 = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20)) #level 1
 button_04 = Button("Settings", (SCREENWIDTH/2, SCREENHEIGHT/2), my_settings_function, bg=(255, 0, 0)) #level 1
 button_05 = Button("Sound", (SCREENWIDTH/2, SCREENHEIGHT/2), my_sound_function, bg=(255, 0, 0)) #level 3
