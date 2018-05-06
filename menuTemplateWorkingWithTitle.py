@@ -3,7 +3,7 @@
 
 # Import the pygame library and initialise the game engine
 import pygame
-from ButtonClass import Button
+from ButtonClassWorkingWithTitle import Button
 pygame.init()
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
 pygame.mixer.music.load('DemonStaff_TitleTheme.mp3')
@@ -33,14 +33,10 @@ pygame.display.set_caption("Game")
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('freesansbold.ttf', 32)
-textSurfaceTitle = fontTitle.render('My Awesome Game!', True, BLACK) 
+fontTitle = pygame.font.Font('freesansbold.ttf', 50)
+textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
-
-def call_back(self):
-    """Runs a function when clicked"""
-    self.call_back_()
 
 def my_next_function():
     """A function that advances to the next level"""
@@ -104,7 +100,6 @@ def mousebuttondown(level):
         for button in level1_buttons:
             if button.rect.collidepoint(pos):
                 button.call_back()
-
     elif level == 2:
         for button in level2_buttons:
             if button.rect.collidepoint(pos):
