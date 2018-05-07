@@ -1,6 +1,6 @@
 import pygame
 
-GREEN = (0, 255, 0)
+WHITE = (255, 255, 255)
 
 #This class represents a car. Derives from the "Sprite" class in pygame
 class Char (pygame.sprite.Sprite) :
@@ -12,8 +12,8 @@ class Char (pygame.sprite.Sprite) :
                 #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
                 self.image = pygame.Surface ([w, h])
-                self.image.fill (GREEN)
-                self.image.set_colorkey (GREEN)
+                self.image.fill (WHITE)
+                self.image.set_colorkey (WHITE)
 
                 self.width = w
                 self.height = h
