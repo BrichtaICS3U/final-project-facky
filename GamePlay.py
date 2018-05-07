@@ -25,6 +25,7 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("My Game")
 
 spriteList = pygame.sprite.Group ()
+ennemiList = pygame.sprite.Group ()
 
 player = Char (GREEN, 50, 50, 100)
 player.rect.x = screenW/2
@@ -36,6 +37,8 @@ badBoi.rect.y = screenH/2
 
 spriteList.add (player)
 spriteList.add (badBoi)
+
+ennemiList.add (badBoi)
 
 # This loop will continue until the user exits the game
 carryOn = True
@@ -61,6 +64,12 @@ while carryOn:
             player.moveDown (5)
 
     # --- Game logic goes here
+    spriteList.update ()
+    
+    collisionList = pygame.sprite.spritecollide (player, ennemiList , False)
+
+    for bad in collisionList :
+        print (Hit)
 
     # --- Draw code goes here
 
