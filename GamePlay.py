@@ -27,12 +27,19 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("My Game")
 
 spriteList = pygame.sprite.Group ()
+ennemiList = pygame.sprite.Group ()
 
 player = Char (RED, 20, 30, 100)
 player.rect.x = screenW/2
 player.rect.y = screenH/2
 
+badBoi = Char (RED, 75, 75, 10)
+badBoi.rect.x = 900
+badBoi.rect.y = screenH/2
+
 spriteList.add (player)
+
+ennemiList.add (badBoi)
 
 # This loop will continue until the user exits the game
 carryOn = True
@@ -47,6 +54,7 @@ while carryOn:
         if event.type == pygame.QUIT: # Player clicked close button
             carryOn = False
 
+        # Arrow controls
         keys = pygame.key.get_pressed ()
         if keys [pygame.K_LEFT] :
             player.moveLeft (5)
@@ -58,6 +66,18 @@ while carryOn:
             player.moveDown (5)
 
     # --- Game logic goes here
+    spriteList.update ()
+
+    collisionList = pygame.sprite.spritecollide (player, ennemiList , False)
+
+    # Does dmg when player toches enemy
+    for bad in collisionList :
+        player.health -= 1
+        print (player.health)
+
+    # Ends game when player runs out of health
+    if player.health <= 0 :
+        carryOn = False
 
     # --- Draw code goes here
 

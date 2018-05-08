@@ -21,7 +21,7 @@ class Char (pygame.sprite.Sprite) :
                 self.health = health
 
                 #Draw car (rectangle)
-                pygame.draw.rect (self.image, c, [0, 0, w, h])
+                pygame.draw.rect (self.image, color, [0, 0, w, h])
 
                 #This loads a image of car
                 #self.image = pygame.image.load ("car.png").convert_alpha()
