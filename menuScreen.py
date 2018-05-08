@@ -33,8 +33,8 @@ pygame.display.set_caption("Game")
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('Comic Sans MS.ttf', 50)
-textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
+fontTitle = pygame.font.Font('freesansbold.ttf', 32)
+textSurfaceTitle = fontTitle.render('DemonStaff', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
 
@@ -100,6 +100,7 @@ def mousebuttondown(level):
         for button in level1_buttons:
             if button.rect.collidepoint(pos):
                 button.call_back()
+
     elif level == 2:
         for button in level2_buttons:
             if button.rect.collidepoint(pos):
@@ -160,7 +161,7 @@ while carryOn:
     #print(mouse) # Uncomment to see mouse position in shell
 
     # Check if mouse is pressed
-    
+    click = pygame.mouse.get_pressed()
     #print(click) # Uncomment to see mouse buttons clicked in shell
     
     # --- Draw code goes here

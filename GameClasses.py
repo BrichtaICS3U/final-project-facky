@@ -5,7 +5,7 @@ WHITE = (255, 255, 255)
 #This class represents a car. Derives from the "Sprite" class in pygame
 class Char (pygame.sprite.Sprite) :
 
-        def __init__ (self, c, w, h, health) :
+        def __init__ (self, color, width, height, health) :
                 #Call the parent class (Sprite) constructor
                 super ().__init__()
 
@@ -15,9 +15,9 @@ class Char (pygame.sprite.Sprite) :
                 self.image.fill (WHITE)
                 self.image.set_colorkey (WHITE)
 
-                self.width = w
-                self.height = h
-                self.color = c
+                self.width = width
+                self.height = height
+                self.color = color
                 self.health = health
 
                 #Draw car (rectangle)
