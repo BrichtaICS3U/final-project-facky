@@ -82,11 +82,13 @@ def my_music_on_function():
     """A function that retreats to the previous level"""
     global level
     level += 0
+    pygame.mixer.music.play(-1)
 
 def my_music_off_function():
     """A function that retreats to the previous level"""
     global level
     level += 0
+    pygame.mixer.music.pause()
     
 def my_confirm_function():
     """A function that retreats to the previous level"""

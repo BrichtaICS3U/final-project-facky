@@ -7,7 +7,7 @@ class Object (pygame.sprite.Sprite) :
     def __init__ (self, color, width, height):
         super ().__init__()
 
-        self.image = pygame.Surface ([w, h])
+        self.image = pygame.Surface ([width, h])
         self.image.fill = (WHITE)
         self.image.set_colorkey (WHITE)
 
@@ -15,7 +15,7 @@ class Object (pygame.sprite.Sprite) :
         self.height = height
         self.color = color
 
-        pygame.draw.rect (self.image, color, [0, 0, w, h])
+        pygame.draw.rect (self.image, color, [0, 0, width, height])
 
         self.rect = self.image.get_rect ()
         

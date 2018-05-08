@@ -4,7 +4,7 @@
 # Import the pygame library and initialise the game engine
 import pygame
 from GameClasses import Char
-from ObjectClass import Object
+from GameClasses import Object
 pygame.init()
 
 
@@ -28,8 +28,9 @@ pygame.display.set_caption("My Game")
 
 spriteList = pygame.sprite.Group ()
 ennemiList = pygame.sprite.Group ()
+objectList = pygame.sprite.Group ()
 
-player = Char (RED, 20, 30, 100)
+player = Char (GREEN, 50, 50, 100)
 player.rect.x = screenW/2
 player.rect.y = screenH/2
 
@@ -37,9 +38,17 @@ badBoi = Char (RED, 75, 75, 10)
 badBoi.rect.x = 900
 badBoi.rect.y = screenH/2
 
+staff = Object (PURPLE, 20, 30)
+staff.rect.x = screenW*2/3
+staff.rect.y = screenH/2
+
 spriteList.add (player)
+spriteList.add (badBoi)
+spriteList.add (staff)
 
 ennemiList.add (badBoi)
+
+objectList.add (staff)
 
 # This loop will continue until the user exits the game
 carryOn = True

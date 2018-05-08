@@ -11,7 +11,7 @@ class Char (pygame.sprite.Sprite) :
 
                 #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
-                self.image = pygame.Surface ([w, h])
+                self.image = pygame.Surface ([width, height])
                 self.image.fill (WHITE)
                 self.image.set_colorkey (WHITE)
 
@@ -21,7 +21,7 @@ class Char (pygame.sprite.Sprite) :
                 self.health = health
 
                 #Draw car (rectangle)
-                pygame.draw.rect (self.image, color, [0, 0, w, h])
+                pygame.draw.rect (self.image, color, [0, 0, width, height])
 
                 #This loads a image of car
                 #self.image = pygame.image.load ("car.png").convert_alpha()
@@ -40,6 +40,22 @@ class Char (pygame.sprite.Sprite) :
 
         def moveDown (self, pixels) :
                 self.rect.y += pixels
+
+class Object (pygame.sprite.Sprite) :
+
+    def __init__ (self, color, width, height):
+        super ().__init__()
+
+        self.image = pygame.Surface ([width, height])
+        self.image.set_colorkey (WHITE)
+
+        self.width = width
+        self.height = height
+        self.color = color
+
+        pygame.draw.rect (self.image, color, [0, 0, width, height])
+
+        self.rect = self.image.get_rect ()
 
                 
 
