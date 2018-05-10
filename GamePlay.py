@@ -43,19 +43,20 @@ staff = Staff (PURPLE, 0, 0)
 staff.rect.x = screenW*2/3
 staff.rect.y = screenH/2
 
+<<<<<<< HEAD
 ##staffAOE = StaffAOE (PURPLE, 50, 50)
 ##staffAOE.rect.x = screenW/2
 ##staffAOE.rect.y = screenH/2
+=======
+>>>>>>> f7ce398685aab9eb7dce99a0e3b29dc1dd48004c
 
 spriteList.add (player)
 spriteList.add (badBoi)
 spriteList.add (staff)
-#spriteList.add (staffAOE)
 
 ennemiList.add (badBoi)
 
 objectList.add (staff)
-#objectList.add (staffAOE)
 
 # This loop will continue until the user exits the game
 carryOn = True
