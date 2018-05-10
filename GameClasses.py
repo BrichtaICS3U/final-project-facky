@@ -1,6 +1,9 @@
 import pygame
 
 WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+PURPLE = (174, 20, 188)
 
 #This class represents a car. Derives from the "Sprite" class in pygame
 class Char (pygame.sprite.Sprite) :
@@ -41,13 +44,29 @@ class Char (pygame.sprite.Sprite) :
         def moveDown (self, pixels) :
                 self.rect.y += pixels
 
-class Object (pygame.sprite.Sprite) :
+##class Object (pygame.sprite.Sprite) :
+##
+##    def __init__ (self, color, width, height):
+##        super ().__init__()
+##
+##        self.image = pygame.Surface ([width, height])
+##        self.image.set_colorkey (WHITE)
+##
+##        self.width = width
+##        self.height = height
+##        self.color = color
+##
+##        pygame.draw.rect (self.image, color, [0, 0, width, height])
+##
+##        self.rect = self.image.get_rect ()
+
+class Staff (pygame.sprite.Sprite):
 
     def __init__ (self, color, width, height):
-        super ().__init__()
+        super().__init__()
 
-        self.image = pygame.Surface ([width, height])
-        self.image.set_colorkey (WHITE)
+        self.image = pygame.image.load ("DemonStaff-Staff.png").convert_alpha()
+        self.image.set_colorkey (PURPLE)
 
         self.width = width
         self.height = height
@@ -56,7 +75,5 @@ class Object (pygame.sprite.Sprite) :
         pygame.draw.rect (self.image, color, [0, 0, width, height])
 
         self.rect = self.image.get_rect ()
-
                 
 
-                

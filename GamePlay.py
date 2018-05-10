@@ -4,7 +4,8 @@
 # Import the pygame library and initialise the game engine
 import pygame
 from GameClasses import Char
-from GameClasses import Object
+#from GameClasses import Object
+from GameClasses import Staff
 pygame.init()
 
 
@@ -24,7 +25,7 @@ screenH = 785
 
 size = (screenW, screenH)
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Demon Staff")
 
 spriteList = pygame.sprite.Group ()
 ennemiList = pygame.sprite.Group ()
@@ -38,17 +39,23 @@ badBoi = Char (RED, 75, 75, 10)
 badBoi.rect.x = 900
 badBoi.rect.y = screenH/2
 
-staff = Object (PURPLE, 20, 30)
+staff = Staff (PURPLE, 0, 0)
 staff.rect.x = screenW*2/3
 staff.rect.y = screenH/2
+
+##staffAOE = Staff (PURPLE, 50, 50)
+##staffAOE.rect.x = screenW/2
+##staffAOE.rect.y = screenH/2
 
 spriteList.add (player)
 spriteList.add (badBoi)
 spriteList.add (staff)
+#spriteList.add (staffAOE)
 
 ennemiList.add (badBoi)
 
 objectList.add (staff)
+#objectList.add (staffAOE)
 
 # This loop will continue until the user exits the game
 carryOn = True
@@ -79,6 +86,7 @@ while carryOn:
 
     collisionList = pygame.sprite.spritecollide (player, ennemiList , False)
 
+    
     # Does dmg when player toches enemy
     for bad in collisionList :
         player.health -= 1
@@ -87,6 +95,7 @@ while carryOn:
     # Ends game when player runs out of health
     if player.health <= 0 :
         carryOn = False
+        print("GAME OVER!!!")
 
     # --- Draw code goes here
 
