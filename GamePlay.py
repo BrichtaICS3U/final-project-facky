@@ -4,7 +4,7 @@
 # Import the pygame library and initialise the game engine
 import pygame
 from GameClasses import Char
-#from GameClasses import Object
+from GameClasses import StaffAOE
 from GameClasses import Staff
 pygame.init()
 
@@ -43,19 +43,19 @@ staff = Staff (PURPLE, 0, 0)
 staff.rect.x = screenW*2/3
 staff.rect.y = screenH/2
 
-##staffAOE = Staff (PURPLE, 50, 50)
-##staffAOE.rect.x = screenW/2
-##staffAOE.rect.y = screenH/2
+staffAOE = StaffAOE (PURPLE, 300, 300)
+staffAOE.rect.x = screenW/2
+staffAOE.rect.y = screenH/2
 
 spriteList.add (player)
 spriteList.add (badBoi)
 spriteList.add (staff)
-#spriteList.add (staffAOE)
+spriteList.add (staffAOE)
 
 ennemiList.add (badBoi)
 
 objectList.add (staff)
-#objectList.add (staffAOE)
+objectList.add (staffAOE)
 
 # This loop will continue until the user exits the game
 carryOn = True
