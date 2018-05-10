@@ -28,9 +28,9 @@ class Char (pygame.sprite.Sprite) :
 
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
-        
+
         def moveRight (self, pixels) :
-               self.rect.x += pixels
+                self.rect.x += pixels
 
         def moveLeft (self, pixels) :
                 self.rect.x -= pixels
