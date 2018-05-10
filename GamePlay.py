@@ -70,16 +70,16 @@ while carryOn:
         if event.type == pygame.QUIT: # Player clicked close button
             carryOn = False
 
-        # Arrow controls
-        keys = pygame.key.get_pressed ()
-        if keys [pygame.K_LEFT] :
-            player.moveLeft (5)
-        if keys [pygame.K_RIGHT] :
-            player.moveRight (5)
-        if keys [pygame.K_UP] :
-            player.moveUp (5)
-        if keys [pygame.K_DOWN] :
-            player.moveDown (5)
+    # Arrow controls
+    keys = pygame.key.get_pressed ()
+    if keys [pygame.K_LEFT] :
+        player.moveLeft (5)
+    if keys [pygame.K_RIGHT] :
+        player.moveRight (5)
+    if keys [pygame.K_UP] :
+        player.moveUp (5)
+    if keys [pygame.K_DOWN] :
+        player.moveDown (5)
 
     # --- Game logic goes here
     spriteList.update ()
