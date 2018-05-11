@@ -57,7 +57,7 @@ class StaffAOE (pygame.sprite.Sprite) :
         self.height = height
         self.color = color
 
-        pygame.draw.rect (self.image, color, [0, 0, width, height], 10)
+        pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
 
         self.rect = self.image.get_rect ()
 

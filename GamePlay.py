@@ -40,13 +40,12 @@ badBoi.rect.x = 900
 badBoi.rect.y = screenH/2
 
 staff = Staff (PURPLE, 0, 0)
-staff.rect.x = screenW/2
+staff.rect.x = screenW/3
 staff.rect.y = screenH/2
 
-
-staffAOE = StaffAOE (PURPLE, 300, 300)
-staffAOE.rect.x = staff.rect.x-120
-staffAOE.rect.y = staff.rect.y-120
+staffAOE = StaffAOE (PURPLE, 400, 400)
+staffAOE.rect.x = staff.rect.x-170
+staffAOE.rect.y = staff.rect.y-160
 
 spriteList.add (player)
 spriteList.add (badBoi)
