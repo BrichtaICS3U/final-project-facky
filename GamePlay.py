@@ -43,6 +43,7 @@ staff = Staff (PURPLE, 0, 0)
 staff.rect.x = screenW/2
 staff.rect.y = screenH/2
 
+
 staffAOE = StaffAOE (PURPLE, 300, 300)
 staffAOE.rect.x = staff.rect.x-120
 staffAOE.rect.y = staff.rect.y-120
@@ -104,8 +105,11 @@ while carryOn:
 
     # Queue different shapes and lines to be drawn
     spriteList.draw (screen)
-    
 
+    #Health Bar 
+    pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
+    pygame.draw.rect (screen, GREEN, [10, 10, player.health * 2, 50])
+    
     # Update the screen with queued shapes
     pygame.display.flip()
 
