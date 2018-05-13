@@ -6,6 +6,7 @@ import pygame
 from GameClasses import Char
 from GameClasses import StaffAOE
 from GameClasses import Staff
+from GameClasses import Enemy
 pygame.init()
 
 
@@ -35,7 +36,7 @@ player = Char (GREEN, 50, 50, 100)
 player.rect.x = screenW/2
 player.rect.y = screenH/2
 
-badBoi = Char (RED, 75, 75, 10)
+badBoi = Enemy (RED, 0, 0, 10)
 badBoi.rect.x = 900
 badBoi.rect.y = screenH/2
 

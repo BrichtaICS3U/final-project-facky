@@ -77,4 +77,27 @@ class Staff (pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect ()
                 
+class Enemy (pygame.sprite.Sprite) :
 
+        def __init__ (self, color, width, height, health) :
+                #Call the parent class (Sprite) constructor
+                super ().__init__()
+
+                #Put in the color (c), x, y, width (w) and height (h) of car
+                #Set background color to transparent
+                self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
+                self.image.set_colorkey (WHITE)
+
+                self.width = width
+                self.height = height
+                self.color = color
+                self.health = health
+
+                #Draw car (rectangle)
+                pygame.draw.rect (self.image, color, [0, 0, width, height])
+
+                #This loads a image of car
+                #self.image = pygame.image.load ("car.png").convert_alpha()
+
+                #Get rectangle object that has dimensions of image
+                self.rect = self.image.get_rect ()
