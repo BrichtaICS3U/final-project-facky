@@ -32,7 +32,8 @@ class Char (pygame.sprite.Sprite) :
 
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
-        
+
+        # Changes position of char
         def moveRight (self, pixels) :
                self.rect.x += pixels
 
@@ -45,27 +46,30 @@ class Char (pygame.sprite.Sprite) :
         def moveDown (self, pixels) :
                 self.rect.y += pixels
 
+# class of the enchanting zone from staff
 class StaffAOE (pygame.sprite.Sprite) :
 
-    def __init__ (self, color, width, height):
-        super ().__init__()
+        def __init__ (self, color, width, height):
 
-        self.image = pygame.Surface ([width, height])
-        self.image.set_colorkey (BLACK)
+                super ().__init__()
 
-        self.width = width
-        self.height = height
-        self.color = color
+                self.image = pygame.Surface ([width, height])
+                self.image.set_colorkey (BLACK)
+                self.width = width
+                self.height = height
+                self.color = color
 
-        pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
+                # Looks like a circl
+                pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
+                self.rect = self.image.get_rect ()
 
-        self.rect = self.image.get_rect ()
-
+# class for the staff itself
 class Staff (pygame.sprite.Sprite):
 
     def __init__ (self, color, width, height):
         super().__init__()
 
+        # uses custom sprite image made by Farhan
         self.image = pygame.image.load ("DemonStaff-Staff.png").convert_alpha()
         self.image.set_colorkey (WHITE)
 
