@@ -86,7 +86,7 @@ while carryOn:
     spriteList.update ()
 
     #checks for collision between enemy and player
-    collisionList = pygame.sprite.spritecollide (player, ennemiList , False)
+    collisionList = pygame.sprite.spritecollide (player, ennemiList , False, pygame.sprite.collide_mask)
     
     # Does dmg when player toches enemy
     for bad in collisionList :

@@ -90,7 +90,7 @@ class Enemy (pygame.sprite.Sprite) :
                 #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
                 self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
-                self.image.set_colorkey (WHITE)
+                self.mask = pygame.mask.from_surface (self.image)
 
                 self.width = width
                 self.height = height
