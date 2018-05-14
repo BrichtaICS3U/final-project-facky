@@ -49,7 +49,7 @@ class Char (pygame.sprite.Sprite) :
 # class of the enchanting zone from staff
 class StaffAOE (pygame.sprite.Sprite) :
 
-        def __init__ (self, color, width, height):
+        def __init__ (self, color, width, height, radius):
 
                 super ().__init__()
 
@@ -58,11 +58,13 @@ class StaffAOE (pygame.sprite.Sprite) :
                 self.width = width
                 self.height = height
                 self.color = color
+                self.radius = radius
 
-                # Looks like a circl
+                # Looks like a circle
                 pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
                 self.rect = self.image.get_rect ()
 
+                
 # class for the staff itself
 class Staff (pygame.sprite.Sprite):
 
@@ -86,12 +88,13 @@ class Enemy (pygame.sprite.Sprite) :
         def __init__ (self, color, width, height, health) :
                 #Call the parent class (Sprite) constructor
                 super ().__init__()
-
-                #Put in the color (c), x, y, width (w) and height (h) of car
-                #Set background color to transparent
+                
+                # mask code from: http://www.101computing.net/pygame-how-tos/
                 self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
 
+                 #Put in the color (c), x, y, width (w) and height (h) of car
+                #Set background color to transparent
                 self.width = width
                 self.height = height
                 self.color = color
