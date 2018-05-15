@@ -5,7 +5,7 @@
 import pygame
 import math
 
-from GameClasses import Char
+from GameClasses import Player
 from GameClasses import StaffAOE
 from GameClasses import Staff
 from GameClasses import Enemy
@@ -36,7 +36,7 @@ ennemiList = pygame.sprite.Group ()
 objectList = pygame.sprite.Group ()
 
 # Create the objects
-player = Char (GREEN, 50, 50, 100)
+player = Player (GREEN, 50, 50, 100)
 player.rect.center = (screenW//2, screenH//2)
 
 badBoi = Enemy (RED, 0, 0, 10)
@@ -77,13 +77,13 @@ while carryOn:
 
     # - Arrow controls
     keys = pygame.key.get_pressed ()
-    if keys [pygame.K_LEFT] :
+    if keys [pygame.K_a] :
         player.moveLeft (5)
-    if keys [pygame.K_RIGHT] :
+    if keys [pygame.K_d] :
         player.moveRight (5)
-    if keys [pygame.K_UP] :
+    if keys [pygame.K_w] :
         player.moveUp (5)
-    if keys [pygame.K_DOWN] :
+    if keys [pygame.K_s] :
         player.moveDown (5)
 
     # --- Game logic goes here
@@ -116,6 +116,8 @@ while carryOn:
     if player.health <= 0 :
         carryOn = False
         print("GAME OVER!!!")
+
+    print (pygame.mouse.get_pressed())
 
     # --- Draw code goes here
 
