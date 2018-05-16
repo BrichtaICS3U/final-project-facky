@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -8,11 +8,12 @@ PURPLE = (174, 20, 188)
 
 #This class represents the player. Derives from the "Sprite" class in pygame
 # Code based off of http://www.101computing.net/creating-sprites-using-pygame/
-class Player (pygame.sprite.Sprite) :
+
+class Char (pygame.sprite.Sprite) :
 
         def __init__ (self, color, width, height, health) :
-                #Call the parent class (Sprite) constructor
-                super ().__init__()
+
+                super (). __init__ ()
 
                 #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
@@ -34,6 +35,8 @@ class Player (pygame.sprite.Sprite) :
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
 
+class Player (Char) :
+
         # Changes position of char
         def moveRight (self, pixels) :
                self.rect.x += pixels
@@ -47,10 +50,11 @@ class Player (pygame.sprite.Sprite) :
         def moveDown (self, pixels) :
                 self.rect.y += pixels
 
+
 # class to create enemies
 class Enemy (pygame.sprite.Sprite) :
 
-        def __init__ (self, color, width, height, health) :
+        def __init__ (self, color, width, height, health, speed) :
                 #Call the parent class (Sprite) constructor
                 super ().__init__()
                 
@@ -58,12 +62,13 @@ class Enemy (pygame.sprite.Sprite) :
                 self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
 
-                 #Put in the color (c), x, y, width (w) and height (h) of car
+                #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
                 self.width = width
                 self.height = height
                 self.color = color
                 self.health = health
+                self.speed = speed
 
                 #Draw car (rectangle)
                 pygame.draw.rect (self.image, color, [0, 0, width, height])
@@ -73,6 +78,20 @@ class Enemy (pygame.sprite.Sprite) :
 
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
+
+        # makes enemy move toward player
+        # code from: https://stackoverflow.com/questions/20044791/how-to-make-an-enemy-follow-the-player-in-pygame
+        def moveToPlayer (self, player) :
+
+                dx, dy = self.rect.x - player.rect.x, self.rect.y - player.rect.y
+                
+                dist = math.hypot (dx, dy)
+
+                dx, dy = dx / dist, dy/ dist
+
+                self.rect.x -= dx * self.speed
+                self.rect.y -= dy * self.speed
+                
 
 # class of the enchanting zone from staff
 class StaffAOE (pygame.sprite.Sprite) :
@@ -125,10 +144,10 @@ class Fireball (pygame.sprite.Sprite) :
 
                 self.rect = self.image.get_rect ()
 
-##        def shoot (self, pixels) :
-##                mousePos = pygame.mouse.get_pos()
-##                mouseClick = pygame.mouse.get_pressed ()
-##                
-##                if mouseClick ==
+        def shoot (self, pixels) :
+                mousePos = pygame.mouse.get_pos()
+                mouseClick = pygame.mouse.get_pressed ()
+
+                
                 
                 

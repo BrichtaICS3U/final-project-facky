@@ -39,7 +39,7 @@ objectList = pygame.sprite.Group ()
 player = Player (GREEN, 50, 50, 100)
 player.rect.center = (screenW//2, screenH//2)
 
-badBoi = Enemy (RED, 0, 0, 10)
+badBoi = Enemy (RED, 0, 0, 10, 4)
 badBoi.rect.x = 900
 badBoi.rect.y = screenH/2
 
@@ -104,13 +104,12 @@ while carryOn:
     distance = math.hypot (x1 - x2, y1 - y2)
 
     # Check if inside AOE
-    if distance < staffAOE.radius :
-        print ("blessed")
+##    if distance < staffAOE.radius :
+##        print ("blessed")
     
     # - Does dmg when player toches enemy
     for bad in collisionList :
         player.health -= 1
-        print (player.health)
 
     # - Ends game when player runs out of health
     if player.health <= 0 :
@@ -118,6 +117,9 @@ while carryOn:
         print("GAME OVER!!!")
 
     #print (pygame.mouse.get_pressed())
+
+    for enemy in ennemiList :
+        enemy.moveToPlayer (player)
 
     # --- Draw code goes here
 
