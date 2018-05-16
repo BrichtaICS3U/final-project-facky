@@ -2,7 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-import pygame
+import pygame, sys
 from ButtonClass import Button
 pygame.init()
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
