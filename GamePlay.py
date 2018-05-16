@@ -23,8 +23,8 @@ PURPLE = (174, 20, 188)
 # Open a new window
 # The window is defined as (width, height), measured in pixels
 
-screenW = 1440
-screenH = 785
+screenW = 1200
+screenH = 750
 
 size = (screenW, screenH)
 screen = pygame.display.set_mode(size)

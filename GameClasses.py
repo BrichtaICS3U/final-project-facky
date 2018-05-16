@@ -26,6 +26,11 @@ class Char (pygame.sprite.Sprite) :
                 self.color = color
                 self.health = health
 
+class Player (Char) :
+
+        def __init__ (self, color, width, height, health) :
+                super (). __init__ (color, width, height, health)
+
                 #Draw player (rectangle)
                 pygame.draw.rect (self.image, color, [0, 0, width, height])
 
@@ -34,8 +39,6 @@ class Char (pygame.sprite.Sprite) :
 
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
-
-class Player (Char) :
 
         # Changes position of char
         def moveRight (self, pixels) :
@@ -52,29 +55,20 @@ class Player (Char) :
 
 
 # class to create enemies
-class Enemy (pygame.sprite.Sprite) :
+class Enemy (Char) :
 
         def __init__ (self, color, width, height, health, speed) :
                 #Call the parent class (Sprite) constructor
-                super ().__init__()
-                
-                # mask code from: http://www.101computing.net/pygame-how-tos/
-                self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
-                self.mask = pygame.mask.from_surface (self.image)
+                super ().__init__(color, width, height, health)
 
                 #Put in the color (c), x, y, width (w) and height (h) of car
                 #Set background color to transparent
-                self.width = width
-                self.height = height
-                self.color = color
-                self.health = health
                 self.speed = speed
 
-                #Draw car (rectangle)
-                pygame.draw.rect (self.image, color, [0, 0, width, height])
-
-                #This loads a image of car
-                #self.image = pygame.image.load ("car.png").convert_alpha()
+                #This loads a image of sprite
+                # mask code from: http://www.101computing.net/pygame-how-tos/
+                self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
+                self.mask = pygame.mask.from_surface (self.image)
 
                 #Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
