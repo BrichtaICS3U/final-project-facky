@@ -116,6 +116,8 @@ while carryOn:
         carryOn = False
         print("GAME OVER!!!")
 
+    #print (pygame.mouse.get_pressed())
+
     for enemy in ennemiList :
         enemy.moveToPlayer (player)
 
