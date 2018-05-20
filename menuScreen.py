@@ -24,7 +24,7 @@ ORANGE = (255, 165, 0)
 
 # Open a new window
 # The window is defined as (width, height), measured in pixels
-SCREENWIDTH = 1440
+SCREENWIDTH = 1400
 SCREENHEIGHT = 785
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)

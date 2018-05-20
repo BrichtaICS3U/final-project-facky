@@ -9,6 +9,7 @@ from GameClasses import Player
 from GameClasses import StaffAOE
 from GameClasses import Staff
 from GameClasses import Enemy
+from GameClasses import FireBall
 
 pygame.init()
 
@@ -23,8 +24,8 @@ PURPLE = (174, 20, 188)
 # Open a new window
 # The window is defined as (width, height), measured in pixels
 
-screenW = 1200
-screenH = 750
+screenW = 1400
+screenH = 785
 
 size = (screenW, screenH)
 screen = pygame.display.set_mode(size)
@@ -34,6 +35,7 @@ pygame.display.set_caption("Demon Staff")
 spriteList = pygame.sprite.Group ()
 ennemiList = pygame.sprite.Group ()
 objectList = pygame.sprite.Group ()
+projectileList = pygame.sprite.Group ()
 
 # Create the objects
 player = Player (GREEN, 50, 50, 100)
@@ -70,6 +72,7 @@ clock = pygame.time.Clock()
 
 #---------Main Program Loop----------
 while carryOn:
+    
     # --- Main event loop ---
     for event in pygame.event.get(): # Player did something
         if event.type == pygame.QUIT: # Player clicked close button
@@ -85,12 +88,36 @@ while carryOn:
         player.moveUp (5)
     if keys [pygame.K_s] :
         player.moveDown (5)
+    if keys [pygame.K_q] :
+
+        pos = pygame.mouse.get_pos()
+
+        xMouse = pos[0]
+        yMouse = pos[1]
+
+        fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
+
+        spriteList.add (fireBall)
+        projectileList.add (fireBall)
 
     # --- Game logic goes here
     spriteList.update ()
 
     # List to know what to check for collision between enemy(ies) and player
     collisionList = pygame.sprite.spritecollide (player, ennemiList , False, pygame.sprite.collide_mask)
+
+    for fireball in projectileList :
+
+        enemyHitList = pygame.sprite.spritecollide (fireball, ennemiList, True)
+
+        for badboi in enemyHitList :
+            projectileList.remove (fireBall)
+            spriteList.remove (fireBall)
+            print ("kill")
+
+            if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
+                fireball.kill ()
+            
 
     # - Blessing zone to allow player to use magic,
     # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
@@ -104,8 +131,8 @@ while carryOn:
     distance = math.hypot (x1 - x2, y1 - y2)
 
     # Check if inside AOE
-##    if distance < staffAOE.radius :
-##        print ("blessed")
+    if distance < staffAOE.radius :
+        print ("blessed")
     
     # - Does dmg when player toches enemy
     for bad in collisionList :
