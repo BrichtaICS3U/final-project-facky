@@ -2,8 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-import pygame
-import math
+import pygame, math
 
 from GameClasses import Player
 from GameClasses import StaffAOE
@@ -33,16 +32,16 @@ pygame.display.set_caption("Demon Staff")
 
 # Create lists
 spriteList = pygame.sprite.Group ()
-ennemiList = pygame.sprite.Group ()
+enemyList = pygame.sprite.Group ()
 objectList = pygame.sprite.Group ()
 projectileList = pygame.sprite.Group ()
 
-# Create the objects
+# Create the objects and sets properties
 player = Player (GREEN, 50, 50, 100)
 player.rect.center = (screenW//2, screenH//2)
 
 badBoi = Enemy (RED, 0, 0, 10, 4)
-badBoi.rect.x = 900
+badBoi.rect.x = 1300
 badBoi.rect.y = screenH/2
 
 staff = Staff (PURPLE, 0, 0)
@@ -59,7 +58,7 @@ spriteList.add (badBoi)
 spriteList.add (staff)
 spriteList.add (staffAOE)
 
-ennemiList.add (badBoi)
+enemyList.add (badBoi)
 
 objectList.add (staff)
 objectList.add (staffAOE)
@@ -78,7 +77,7 @@ while carryOn:
         if event.type == pygame.QUIT: # Player clicked close button
             carryOn = False
 
-    # - Arrow controls
+    # - WASD controls
     keys = pygame.key.get_pressed ()
     if keys [pygame.K_a] :
         player.moveLeft (5)
@@ -88,52 +87,18 @@ while carryOn:
         player.moveUp (5)
     if keys [pygame.K_s] :
         player.moveDown (5)
-    if keys [pygame.K_q] :
-
-        pos = pygame.mouse.get_pos()
-
-        xMouse = pos[0]
-        yMouse = pos[1]
-
-        fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
-
-        spriteList.add (fireBall)
-        projectileList.add (fireBall)
+    
 
     # --- Game logic goes here
     spriteList.update ()
 
-    # List to know what to check for collision between enemy(ies) and player
-    collisionList = pygame.sprite.spritecollide (player, ennemiList , False, pygame.sprite.collide_mask)
+    # List to know what to check for collision between enemies and player
+    collisionList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
 
-    for fireball in projectileList :
-
-        enemyHitList = pygame.sprite.spritecollide (fireball, ennemiList, True)
-
-        for badboi in enemyHitList :
-            projectileList.remove (fireBall)
-            spriteList.remove (fireBall)
-            print ("kill")
-
-            if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
-                fireball.kill ()
-            
-
-    # - Blessing zone to allow player to use magic,
-    # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
-
-    #  Find pos of player and AOE
-    x1 = player.rect.x
-    y1 = player.rect.y
-    x2, y2 = staffAOE.rect.center
-
-    # Find the distance between 
-    distance = math.hypot (x1 - x2, y1 - y2)
-
-    # Check if inside AOE
-    if distance < staffAOE.radius :
-        print ("blessed")
-    
+    # - Enemies charge to player
+    for enemy in enemyList :
+        enemy.moveToPlayer (player)
+           
     # - Does dmg when player toches enemy
     for bad in collisionList :
         player.health -= 1
@@ -143,11 +108,53 @@ while carryOn:
         carryOn = False
         print("GAME OVER!!!")
 
-    #print (pygame.mouse.get_pressed())
+    # - Blessing zone to allow player to use magic,
+    # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
+    
+    #  Find pos of player and AOE
+    x1 = player.rect.x
+    y1 = player.rect.y
+    x2, y2 = staffAOE.rect.center
 
-    for enemy in ennemiList :
-        enemy.moveToPlayer (player)
+    # Find the distance between player and AOE
+    distance = math.hypot (x1 - x2, y1 - y2)
 
+    # Check if player inside AOE
+    if distance < staffAOE.radius :
+        # Checks pressed Q
+        if keys [pygame.K_q] :
+
+            # Gets position of mouse
+            pos = pygame.mouse.get_pos()
+            xMouse = pos[0]
+            yMouse = pos[1]
+
+            # Creates a "Fireball"
+            fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
+
+            # Add fireball to lists
+            spriteList.add (fireBall)
+            projectileList.add (fireBall)
+
+    # Check for every fireball projectile
+    for fireball in projectileList :
+
+        # Creates a collision list for enemies 
+       enemyHitList = pygame.sprite.spritecollide (fireball, enemyList, True)
+      
+        # When hits enemy, removes fireball enemies
+       for badboi in enemyHitList :
+           
+           projectileList.remove (fireBall)
+           spriteList.remove (fireBall)
+           
+           print ("kill")
+
+        # When goes off screen, remove fireball
+       if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
+
+           fireball.kill ()
+           
     # --- Draw code goes here
 
     # - Clear the screen to white

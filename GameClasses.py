@@ -15,8 +15,8 @@ class Char (pygame.sprite.Sprite) :
 
                 super (). __init__ ()
 
-                #Put in the color (c), x, y, width (w) and height (h) of car
-                #Set background color to transparent
+                # Put in the color (c), x, y, width (w) and height (h) of car
+                # Set background color to transparent
                 self.image = pygame.Surface ([width, height])
                 self.image.fill (WHITE)
                 self.image.set_colorkey (WHITE)
@@ -26,6 +26,7 @@ class Char (pygame.sprite.Sprite) :
                 self.color = color
                 self.health = health
 
+# Used to create the player character
 class Player (Char) :
 
         def __init__ (self, color, width, height, health) :
@@ -34,10 +35,7 @@ class Player (Char) :
                 #Draw player (rectangle)
                 pygame.draw.rect (self.image, color, [0, 0, width, height])
 
-                #This loads a image of player
-                #self.image = pygame.image.load ("car.png").convert_alpha()
-
-                #Get rectangle object that has dimensions of image
+                # Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
 
         # Changes position of char
@@ -54,27 +52,27 @@ class Player (Char) :
                 self.rect.y += pixels
 
 
-# class to create enemies
+# Class to create enemies
 class Enemy (Char) :
 
         def __init__ (self, color, width, height, health, speed) :
-                #Call the parent class (Sprite) constructor
+                # Call the parent class (Sprite) constructor
                 super ().__init__(color, width, height, health)
 
-                #Put in the color (c), x, y, width (w) and height (h) of car
-                #Set background color to transparent
+                # Put in the color (c), x, y, width (w) and height (h) of car
+                # Set background color to transparent
                 self.speed = speed
 
-                #This loads a image of sprite
-                # mask code from: http://www.101computing.net/pygame-how-tos/
+                # This loads a image of sprite
+                # Mask code from: http://www.101computing.net/pygame-how-tos/
                 self.image = pygame.image.load ("DemonStaff-Crawler.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
 
-                #Get rectangle object that has dimensions of image
+                # Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
 
-        # makes enemy move toward player
-        # code from: https://stackoverflow.com/questions/20044791/how-to-make-an-enemy-follow-the-player-in-pygame
+        # Makes enemy move toward player
+        # Code from: https://stackoverflow.com/questions/20044791/how-to-make-an-enemy-follow-the-player-in-pygame
         def moveToPlayer (self, player) :
 
                 dx, dy = self.rect.x - player.rect.x, self.rect.y - player.rect.y
@@ -85,7 +83,8 @@ class Enemy (Char) :
 
                 self.rect.x -= dx * self.speed
                 self.rect.y -= dy * self.speed
-
+                
+# Object super class
 class Object (pygame.sprite.Sprite) :
         
         def __init__ (self, color, width, height) :
@@ -101,7 +100,7 @@ class Object (pygame.sprite.Sprite) :
                 self.height = height
                 
 
-# class of the enchanting zone from staff
+# Class of the enchanting zone from staff
 class StaffAOE (Object) :
 
         def __init__ (self, color, width, height, radius):
@@ -113,9 +112,9 @@ class StaffAOE (Object) :
                 # Looks like a circle
                 pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
                 self.rect = self.image.get_rect ()
-
                 
-# class for the staff itself
+                
+# Class for the staff itself
 class Staff (Object):
 
     def __init__ (self, color, width, height):
@@ -136,7 +135,7 @@ class Projectile (pygame.sprite.Sprite) :
 
                 super (). __init__ ()
 
-                
+                # Makes a rectangle
                 self.image = pygame.Surface ([20, 15])
                 self.image.fill (RED)
                 
@@ -174,12 +173,14 @@ class Projectile (pygame.sprite.Sprite) :
                 self.rect.x = int(self.floating_xPoint)
                 self.rect.y = int(self.floating_yPoint)
 
+# The fireball sprite
 class FireBall (Projectile) :
 
         def __init__ (self, xStart, yStart, xDest, yDest) :
 
                 super().__init__ (xStart, yStart, xDest, yDest)
 
+                # Changes default into fireball sprite
                 self.image = pygame.image.load ("Demon Staff - Fireball Frame 1.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
                         
