@@ -35,6 +35,7 @@ spriteList = pygame.sprite.Group ()
 enemyList = pygame.sprite.Group ()
 objectList = pygame.sprite.Group ()
 projectileList = pygame.sprite.Group ()
+itemList = pygame.sprite.Group ()
 
 # Create the objects and sets properties
 player = Player (GREEN, 50, 50, 100)
@@ -62,6 +63,8 @@ enemyList.add (badBoi)
 
 objectList.add (staff)
 objectList.add (staffAOE)
+
+itemList.add (staff)
 
 # This loop will continue until the user exits the game
 carryOn = True
@@ -93,14 +96,15 @@ while carryOn:
     spriteList.update ()
 
     # List to know what to check for collision between enemies and player
-    collisionList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
+    hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
+    pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
 
     # - Enemies charge to player
     for enemy in enemyList :
         enemy.moveToPlayer (player)
            
     # - Does dmg when player toches enemy
-    for bad in collisionList :
+    for bad in hurtList :
         player.health -= 1
 
     # - Ends game when player runs out of health
@@ -140,10 +144,10 @@ while carryOn:
     for fireball in projectileList :
 
         # Creates a collision list for enemies 
-       enemyHitList = pygame.sprite.spritecollide (fireball, enemyList, True)
+       enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, True)
       
         # When hits enemy, removes fireball enemies
-       for badboi in enemyHitList :
+       for badboi in enemyKillList :
            
            projectileList.remove (fireBall)
            spriteList.remove (fireBall)

@@ -125,6 +125,11 @@ class Staff (Object):
 
         self.rect = self.image.get_rect ()
 
+    def moveWithPlayer (self, player) :
+
+                self.rect.x = player.rect.x - 5
+                self.rect.y = player.rect.y
+            
 # Super class for projectiles
 # Based from : http://programarcadegames.com/python_examples/en/bullets_aimed.py
 class Projectile (pygame.sprite.Sprite) :
