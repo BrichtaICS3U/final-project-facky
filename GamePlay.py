@@ -28,6 +28,7 @@ screenH = 785
 
 size = (screenW, screenH)
 screen = pygame.display.set_mode(size)
+background = pygame.image.load('Demon Staff - Background.png')
 pygame.display.set_caption("Demon Staff")
 
 # Create lists
@@ -125,6 +126,7 @@ while carryOn:
 
     # - Clear the screen to white
     screen.fill(WHITE)
+    screen.blit(background, (0, 0))
 
     # Queue different shapes and lines to be drawn
     spriteList.draw (screen)
