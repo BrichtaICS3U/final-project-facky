@@ -27,7 +27,7 @@ screenW = 1400
 screenH = 785
 
 size = (screenW, screenH)
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode (size)
 background = pygame.image.load('Demon Staff - Background.png')
 pygame.display.set_caption("Demon Staff")
 
@@ -47,12 +47,12 @@ badBoi.rect.x = 1300
 badBoi.rect.y = screenH/2
 
 staff = Staff (PURPLE, 0, 0)
-staff.rect.x = screenW/3
-staff.rect.y = screenH/2
+staff.rect.x = screenW//3
+staff.rect.y = screenH//2
 
 staffAOE = StaffAOE (PURPLE, 400, 400, 400//2)
-staffAOE.rect.x = staff.rect.x-170
-staffAOE.rect.y = staff.rect.y-160
+staffAOE.rect.x = staff.rect.x - 170
+staffAOE.rect.y = staff.rect.y - 160
 
 # Put objects into lists
 spriteList.add (player)
@@ -66,14 +66,18 @@ objectList.add (staff)
 objectList.add (staffAOE)
 
 itemList.add (staff)
+itemList.add (staffAOE)
 
 # This loop will continue until the user exits the game
 carryOn = True
 
 # The clock will be used to control how fast the screen updates
-clock = pygame.time.Clock()
+clock = pygame.time.Clock ()
 
 #---------Main Program Loop----------
+
+active = True
+
 while carryOn:
     
     # --- Main event loop ---
@@ -100,6 +104,18 @@ while carryOn:
     hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
     pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
 
+    # - Moves staff when pressed es
+    for item in pickUpList :
+        if keys [pygame.K_e] :
+            item.moveWithPlayer (player)
+            staffAOE.moveWithStaff (staff)
+            staffAOE.kill ()
+            active = False
+        else :
+            staffAOE.add (objectList)
+            staffAOE.add (spriteList)
+            active = True
+
     # - Enemies charge to player
     for enemy in enemyList :
         enemy.moveToPlayer (player)
@@ -125,9 +141,14 @@ while carryOn:
     distance = math.hypot (x1 - x2, y1 - y2)
 
     # Check if player inside AOE
-    if distance < staffAOE.radius :
-        # Checks pressed Q
-        if keys [pygame.K_q] :
+    if distance < staffAOE.radius and active == True :
+        # Checks pressed SpaceBar
+        if keys [pygame.K_SPACE] :
+
+            player.moveLeft (0)
+            player.moveRight (0)
+            player.moveUp (0)
+            player.moveDown (0)
 
             # Gets position of mouse
             pos = pygame.mouse.get_pos()
@@ -164,7 +185,7 @@ while carryOn:
 
     # - Clear the screen to white
     screen.fill(WHITE)
-    screen.blit(background, (0, 0))
+##    screen.blit(background, (0, 0))
 
     # Queue different shapes and lines to be drawn
     spriteList.draw (screen)
@@ -177,7 +198,7 @@ while carryOn:
     pygame.display.flip()
 
     # --- Limit to 60 frames per second
-    clock.tick(60)
+    clock.tick(120)
 
 # Once the main program loop is exited, stop the game engine
 pygame.quit()

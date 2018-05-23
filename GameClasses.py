@@ -112,7 +112,11 @@ class StaffAOE (Object) :
                 # Looks like a circle
                 pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
                 self.rect = self.image.get_rect ()
-                
+
+        def moveWithStaff (self, item) :
+
+                self.rect.x = item.rect.x - 170
+                self.rect.y = item.rect.y - 160
                 
 # Class for the staff itself
 class Staff (Object):
@@ -127,7 +131,7 @@ class Staff (Object):
 
     def moveWithPlayer (self, player) :
 
-                self.rect.x = player.rect.x - 5
+                self.rect.x = player.rect.x
                 self.rect.y = player.rect.y
             
 # Super class for projectiles
