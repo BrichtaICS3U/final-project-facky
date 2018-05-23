@@ -195,13 +195,4 @@ class FireBall (Projectile) :
                 # Changes default into fireball sprite
                 self.image = pygame.image.load ("Demon Staff - Fireball Frame 1.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
-<<<<<<< HEAD
-                
 
-                        
-
-                
-                
-                
-=======
->>>>>>> 3bd743295cf684a2bf4763c5513a054cee5e7141
