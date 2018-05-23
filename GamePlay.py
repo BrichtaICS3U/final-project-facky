@@ -127,7 +127,7 @@ while carryOn:
     # Check if player inside AOE
     if distance < staffAOE.radius :
         # Checks pressed Q
-        if keys [pygame.K_q] :
+        if keys [pygame.K_SPACE] :
 
             # Gets position of mouse
             pos = pygame.mouse.get_pos()
