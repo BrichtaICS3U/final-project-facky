@@ -141,6 +141,11 @@ while carryOn:
     distance = math.hypot (x1 - x2, y1 - y2)
 
     # Check if player inside AOE
+<<<<<<< HEAD
+    if distance < staffAOE.radius :
+        # Checks pressed Q
+        if keys [pygame.K_SPACE] :
+=======
     if distance < staffAOE.radius and active == True :
         # Checks pressed SpaceBar
         if keys [pygame.K_SPACE] :
@@ -149,6 +154,7 @@ while carryOn:
             player.moveRight (0)
             player.moveUp (0)
             player.moveDown (0)
+>>>>>>> be1467d0d39c1b372976722f47dc879bf48905d2
 
             # Gets position of mouse
             pos = pygame.mouse.get_pos()
