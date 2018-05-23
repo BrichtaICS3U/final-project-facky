@@ -6,8 +6,9 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 PURPLE = (174, 20, 188)
 
-#This class represents the player. Derives from the "Sprite" class in pygame
-# Code based off of http://www.101computing.net/creating-sprites-using-pygame/
+# This class represents the player. Derives from the "Sprite" class in pygame
+# Code based off of http: //www.101computing.net/creating-sprites-using-pygame/
+# Inheritance learned from: http://thepythonguru.com/python-inheritance-and-polymorphism/ 
 
 class Char (pygame.sprite.Sprite) :
 
@@ -154,6 +155,8 @@ class Projectile (pygame.sprite.Sprite) :
                 self.rect.x = xStart
                 self.rect.y = yStart
 
+                # Set variables for cooldown
+
                 # New variables to save values as floats instead of integers
                 self.floating_xPoint = xStart
                 self.floating_yPoint = yStart
@@ -192,6 +195,8 @@ class FireBall (Projectile) :
                 # Changes default into fireball sprite
                 self.image = pygame.image.load ("Demon Staff - Fireball Frame 1.png").convert_alpha()
                 self.mask = pygame.mask.from_surface (self.image)
+                
+
                         
 
                 
