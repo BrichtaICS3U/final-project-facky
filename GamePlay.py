@@ -15,7 +15,6 @@ pygame.init()
 # Define some colours
 # Colours are defined using RGB values
 BLACK = (0, 0, 0)
-GREY = (10, 10, 10)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
@@ -29,7 +28,6 @@ screenH = 785
 
 size = (screenW, screenH)
 screen = pygame.display.set_mode (size)
-background = pygame.image.load('Demon Staff - Background.png')
 pygame.display.set_caption("Demon Staff")
 
 # Create lists
@@ -44,7 +42,7 @@ player = Player (GREEN, 50, 50, 100)
 player.rect.center = (screenW//2, screenH//2)
 
 badBoi = Enemy (RED, 0, 0, 100, 4)
-badBoi.rect.x = 1300
+badBoi.rect.x = 1400
 badBoi.rect.y = screenH/2
 
 staff = Staff (PURPLE, 0, 0)
@@ -210,7 +208,6 @@ while carryOn:
 
     # - Clear the screen to white
     screen.fill(WHITE)
-#   screen.blit(background, (0, 0))
 
     # Queue different shapes and lines to be drawn
     spriteList.draw (screen)
