@@ -15,6 +15,7 @@ pygame.init()
 # Define some colours
 # Colours are defined using RGB values
 BLACK = (0, 0, 0)
+GREY = (10, 10, 10)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
@@ -42,7 +43,7 @@ itemList = pygame.sprite.Group ()
 player = Player (GREEN, 50, 50, 100)
 player.rect.center = (screenW//2, screenH//2)
 
-badBoi = Enemy (RED, 0, 0, 10, 4)
+badBoi = Enemy (RED, 0, 0, 100, 4)
 badBoi.rect.x = 1300
 badBoi.rect.y = screenH/2
 
@@ -68,6 +69,13 @@ objectList.add (staffAOE)
 itemList.add (staff)
 itemList.add (staffAOE)
 
+# Check if staff placed or not
+active = True
+
+# A cooldown event and boolean to see it's state
+cooldownEvent = pygame.USEREVENT
+cooled = True
+
 # This loop will continue until the user exits the game
 carryOn = True
 
@@ -76,14 +84,15 @@ clock = pygame.time.Clock ()
 
 #---------Main Program Loop----------
 
-active = True
-
 while carryOn:
     
     # --- Main event loop ---
     for event in pygame.event.get(): # Player did something
         if event.type == pygame.QUIT: # Player clicked close button
             carryOn = False
+        elif event.type == cooldownEvent : # Off cooldown
+            cooled = True
+            pygame.time.set_timer (cooldownEvent, 0) 
 
     # - WASD controls
     keys = pygame.key.get_pressed ()
@@ -95,8 +104,7 @@ while carryOn:
         player.moveUp (5)
     if keys [pygame.K_s] :
         player.moveDown (5)
-    
-
+        
     # --- Game logic goes here
     spriteList.update ()
 
@@ -104,17 +112,17 @@ while carryOn:
     hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
     pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
 
-    # - Moves staff when pressed es
+    # - Moves staff when presing and holding e
     for item in pickUpList :
         if keys [pygame.K_e] :
             item.moveWithPlayer (player)
             staffAOE.moveWithStaff (staff)
             staffAOE.kill ()
-            active = False
+            active = False # Makes so can't use magic
         else :
             staffAOE.add (objectList)
             staffAOE.add (spriteList)
-            active = True
+            active = True # When placed down again, can use magic again
 
     # - Enemies charge to player
     for enemy in enemyList :
@@ -122,7 +130,16 @@ while carryOn:
            
     # - Does dmg when player toches enemy
     for bad in hurtList :
-        player.health -= 1
+        player.health -= 25
+
+        if bad.rect.x > player.rect.x :
+            player.rect.x -= 100
+        if bad.rect.x < player.rect.x :
+            player.rect.x += 100
+        if bad.rect.y > player.rect.y :
+            player.rect.y -= 100
+        if bad.rect.y < player.rect.y :
+            player.rect.y += 100
 
     # - Ends game when player runs out of health
     if player.health <= 0 :
@@ -143,37 +160,46 @@ while carryOn:
     if distance < staffAOE.radius and active == True :
         # Checks pressed SpaceBar
         if keys [pygame.K_SPACE] :
+            
+            #  - Cooldown portion,
+            # based off: https://stackoverflow.com/questions/23368999/move-an-object-every-few-seconds-in-pygame?noredirect=1&lq=1
+            if cooled:
+                
+                # Gets position of mouse
+                pos = pygame.mouse.get_pos ()
+                xMouse = pos[0]
+                yMouse = pos[1]
 
-            player.moveLeft (0)
-            player.moveRight (0)
-            player.moveUp (0)
-            player.moveDown (0)
+                # Creates a "Fireball"
+                fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
 
-            # Gets position of mouse
-            pos = pygame.mouse.get_pos()
-            xMouse = pos[0]
-            yMouse = pos[1]
+                # Add fireball to lists
+                spriteList.add (fireBall)
+                projectileList.add (fireBall)
 
-            # Creates a "Fireball"
-            fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
-
-            # Add fireball to lists
-            spriteList.add (fireBall)
-            projectileList.add (fireBall)
+                # Now on cooldown
+                cooled = False
+                
+                # Start cooldown timer
+                pygame.time.set_timer (cooldownEvent, 1500)
 
     # Check for every fireball projectile
     for fireball in projectileList :
 
         # Creates a collision list for enemies 
-       enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, True)
+       enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False)
       
         # When hits enemy, removes fireball enemies
        for badboi in enemyKillList :
+
+           badboi.health -= 25
+           print (badboi.health)
            
            projectileList.remove (fireBall)
            spriteList.remove (fireBall)
            
-           print ("kill")
+           if badboi.health <= 0 :
+               badboi.kill ()
 
         # When goes off screen, remove fireball
        if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
@@ -192,7 +218,7 @@ while carryOn:
     # - Health Bar 
     pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
     pygame.draw.rect (screen, GREEN, [10, 10, player.health * 2, 50])
-    
+
     # Update the screen with queued shapes
     pygame.display.flip()
 
