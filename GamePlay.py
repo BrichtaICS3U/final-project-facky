@@ -154,30 +154,7 @@ while carryOn:
 
     # Find the distance between player and AOE
     distance = math.hypot (x1 - x2, y1 - y2)
-
-<<<<<<< HEAD
-    # Checks pressed Q
-    if distance < staffAOE.radius and active == True :
-        # Checks pressed SpaceBar
-        if keys [pygame.K_SPACE] :
-
-            player.moveLeft (0)
-            player.moveRight (0)
-            player.moveUp (0)
-            player.moveDown (0)
-
-            # Gets position of mouse
-            pos = pygame.mouse.get_pos()
-            xMouse = pos[0]
-            yMouse = pos[1]
-
-            # Creates a "Fireball"
-            fireBall = FireBall (player.rect.x, player.rect.y, xMouse, yMouse)
-
-            # Add fireball to lists
-            spriteList.add (fireBall)
-            projectileList.add (fireBall)
-=======
+            
     if distance < staffAOE.radius and active == True :
         # Checks pressed SpaceBar
         if keys [pygame.K_SPACE] :
@@ -202,8 +179,7 @@ while carryOn:
                 cooled = False
                 
                 # Start cooldown timer
-                pygame.time.set_timer (cooldownEvent, 1500)
->>>>>>> a74e7592b6ea1ecc2bedb3dab611c896be86d8c0
+                pygame.time.set_timer (cooldownEvent, 3000)
 
     # Check for every fireball projectile
     for fireball in projectileList :
