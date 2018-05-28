@@ -27,14 +27,24 @@ class Char (pygame.sprite.Sprite) :
                 self.color = color
                 self.health = health
 
+                pos = pygame.mouse.get_pos()
+                xMouse = pos[0]
+                yMouse = pos[1]
+
 # Used to create the player character
 class Player (Char) :
 
         def __init__ (self, color, width, height, health) :
                 super (). __init__ (color, width, height, health)
 
+                self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
+                self.right = self.image
+                self.left = pygame.image.load ("Demon Staff - Main Hero Left.png").convert_alpha()
                 #Draw player (rectangle)
-                pygame.draw.rect (self.image, color, [0, 0, width, height])
+                #if self.rect.x < xMouse:
+                #        self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
+                #elif self.rect.x > xMouse:
+                #        self.image = pygame.image.load ("Demon Staff - Main Hero Left.png").convert_alpha()
 
                 # Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
@@ -51,6 +61,16 @@ class Player (Char) :
 
         def moveDown (self, pixels) :
                 self.rect.y += pixels
+
+        def update (self):
+                pos = pygame.mouse.get_pos()
+                xMouse = pos[0]
+                #Draw player (rectangle)
+                if self.rect.x < xMouse:
+                        self.image = self.right
+                elif self.rect.x > xMouse:
+                        self.image = self.left
+               
 
 
 # Class to create enemies

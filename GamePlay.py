@@ -25,8 +25,18 @@ def Game () :
     # Open a new window
     # The window is defined as (width, height), measured in pixels
 
+<<<<<<< HEAD
     screenW = 1400
     screenH = 785
+=======
+pos = pygame.mouse.get_pos ()
+xMouse = pos[0]
+yMouse = pos[1]
+
+size = (screenW, screenH)
+screen = pygame.display.set_mode (size)
+pygame.display.set_caption("Demon Staff")
+>>>>>>> 6caea15e1ec1cf80a782ddca9a53fbac64a9a164
 
     size = (screenW, screenH)
     screen = pygame.display.set_mode (size)
@@ -86,6 +96,7 @@ def Game () :
 
     while carryOn:
         
+<<<<<<< HEAD
         # --- Main event loop ---
         for event in pygame.event.get(): # Player did something
             if event.type == pygame.QUIT: # Player clicked close button
@@ -104,6 +115,63 @@ def Game () :
             player.moveUp (5)
         if keys [pygame.K_s] :
             player.moveDown (5)
+=======
+    # --- Game logic goes here
+    spriteList.update ()
+
+    # List to know what to check for collision between enemies and player
+    hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
+    pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
+
+    # - Moves staff when presing and holding e
+    for item in pickUpList :
+        if keys [pygame.K_e] :
+            item.moveWithPlayer (player)
+            staffAOE.moveWithStaff (staff)
+            staffAOE.kill ()
+            active = False # Makes so can't use magic
+        else :
+            staffAOE.add (objectList)
+            staffAOE.add (spriteList)
+            active = True # When placed down again, can use magic again
+
+    # - Enemies charge to player
+    for enemy in enemyList :
+        enemy.moveToPlayer (player)
+           
+    # - Does dmg when player toches enemy
+    for bad in hurtList :
+        player.health -= 25
+
+        if bad.rect.x > player.rect.x :
+            player.rect.x -= 100
+        if bad.rect.x < player.rect.x :
+            player.rect.x += 100
+        if bad.rect.y > player.rect.y :
+            player.rect.y -= 100
+        if bad.rect.y < player.rect.y :
+            player.rect.y += 100
+
+    # - Ends game when player runs out of health
+    if player.health <= 0 :
+        carryOn = False
+        print("GAME OVER!!!")
+
+    # - Blessing zone to allow player to use magic,
+    # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
+    
+    #  Find pos of player and AOE
+    x1 = player.rect.x
+    y1 = player.rect.y
+    x2, y2 = staffAOE.rect.center
+
+    # Find the distance between player and AOE
+    distance = math.hypot (x1 - x2, y1 - y2)
+
+    if distance < staffAOE.radius and active == True :
+        # Checks pressed SpaceBar
+        if keys [pygame.K_SPACE] :
+>>>>>>> 6caea15e1ec1cf80a782ddca9a53fbac64a9a164
             
         # --- Game logic goes here
         spriteList.update ()
@@ -157,6 +225,7 @@ def Game () :
         # Find the distance between player and AOE
         distance = math.hypot (x1 - x2, y1 - y2)
                 
+<<<<<<< HEAD
         if distance < staffAOE.radius and active == True :
             # Checks pressed SpaceBar
             if keys [pygame.K_SPACE] :
@@ -228,3 +297,52 @@ def Game () :
     pygame.quit()
 
 Game()
+=======
+                # Start cooldown timer
+                pygame.time.set_timer (cooldownEvent, 3000)
+
+    # Check for every fireball projectile
+    for fireball in projectileList :
+
+        # Creates a collision list for enemies 
+       enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False)
+      
+        # When hits enemy, removes fireball enemies
+       for badboi in enemyKillList :
+
+           badboi.health -= 25
+           print (badboi.health)
+           
+           projectileList.remove (fireBall)
+           spriteList.remove (fireBall)
+           
+           if badboi.health <= 0 :
+               badboi.kill ()
+
+        # When goes off screen, remove fireball
+       if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
+
+           fireball.kill ()
+           
+    # --- Draw code goes here
+
+    # - Clear the screen to white
+    screen.fill(WHITE)
+
+    # Queue different shapes and lines to be drawn
+    spriteList.update()
+    spriteList.draw (screen)
+
+    # - Health Bar 
+    pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
+    pygame.draw.rect (screen, GREEN, [10, 10, player.health * 2, 50])
+
+    # Update the screen with queued shapes
+    pygame.display.flip()
+
+    # --- Limit to 60 frames per second
+    clock.tick(120)
+
+# Once the main program loop is exited, stop the game engine
+pygame.quit()
+>>>>>>> 6caea15e1ec1cf80a782ddca9a53fbac64a9a164
