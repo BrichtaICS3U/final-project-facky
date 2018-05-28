@@ -1,9 +1,8 @@
 # Pygame Template File
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
-def Game () :
-    # Pygame Template File
-    # adapted from http://www.101computing.net/getting-started-with-pygame/
+# Import the pygame library and initialise the game engine
+import pygame, math
 
 from GameClasses import Player
 from GameClasses import StaffAOE
