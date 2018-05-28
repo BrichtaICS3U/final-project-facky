@@ -205,7 +205,11 @@ while carryOn:
                 cooled = False
                 
                 # Start cooldown timer
+<<<<<<< HEAD
                 pygame.time.set_timer (cooldownEvent, 1500)
+=======
+                pygame.time.set_timer (cooldownEvent, 3000)
+>>>>>>> d50149e6a2d34b6604873afd8b3d8f26542f1e1c
 
     # Check for every fireball projectile
     for fireball in projectileList :
