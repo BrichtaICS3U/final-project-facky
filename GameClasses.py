@@ -40,11 +40,6 @@ class Player (Char) :
                 self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
                 self.right = self.image
                 self.left = pygame.image.load ("Demon Staff - Main Hero Left.png").convert_alpha()
-                #Draw player (rectangle)
-                #if self.rect.x < xMouse:
-                #        self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
-                #elif self.rect.x > xMouse:
-                #        self.image = pygame.image.load ("Demon Staff - Main Hero Left.png").convert_alpha()
 
                 # Get rectangle object that has dimensions of image
                 self.rect = self.image.get_rect ()
