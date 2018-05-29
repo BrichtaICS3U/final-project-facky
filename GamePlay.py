@@ -116,7 +116,7 @@ while carryOn:
 
     # - Moves staff when presing and holding e
     for item in pickUpList :
-        if keys [pygame.K_e] :
+        if keys [pygame.K_SPACE] :
             item.moveWithPlayer (player)
             staffAOE.moveWithStaff (staff)
             staffAOE.kill ()
@@ -161,7 +161,7 @@ while carryOn:
 
     if distance < staffAOE.radius and active == True :
         # Checks pressed SpaceBar
-        if keys [pygame.K_SPACE] :
+        if keys [pygame.K_e] :
             
             #  - Cooldown portion,
             # based off: https://stackoverflow.com/questions/23368999/move-an-object-every-few-seconds-in-pygame?noredirect=1&lq=1

@@ -40,6 +40,8 @@ class Player (Char) :
                 self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
                 self.right = self.image
                 self.left = pygame.image.load ("Demon Staff - Main Hero Left.png").convert_alpha()
+                self.back = pygame.image.load ("Demon Staff - Main Hero Back.png").convert_alpha()
+                self.front = pygame.image.load ("Demon Staff - Main Hero Front.png").convert_alpha()
                 #Draw player (rectangle)
                 #if self.rect.x < xMouse:
                 #        self.image = pygame.image.load ("Demon Staff - Main Hero Right.png").convert_alpha()
@@ -65,11 +67,16 @@ class Player (Char) :
         def update (self):
                 pos = pygame.mouse.get_pos()
                 xMouse = pos[0]
+                yMouse = pos[1]
                 #Draw player (rectangle)
-                if self.rect.x < xMouse:
-                        self.image = self.right
-                elif self.rect.x > xMouse:
+                if self.rect.x - xMouse > self.rect.y - yMouse and self.rect.x > xMouse:
                         self.image = self.left
+                elif self.rect.x - xMouse > self.rect.y - yMouse and self.rect.x < xMouse:
+                        self.image = self.front
+                elif self.rect.x - xMouse < self.rect.y - yMouse and self.rect.y < yMouse:
+                        self.image = self.right
+                elif self.rect.x - xMouse < self.rect.y - yMouse and self.rect.y > yMouse:
+                        self.image = self.back
                
 
 

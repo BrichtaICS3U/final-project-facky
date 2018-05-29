@@ -127,10 +127,10 @@ level = 1
 carryOn = True
 
 #create button objects
-button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function) #level 1
-button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function) #level 3
-button_03 = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20)) #level 1
-button_04 = Button("Settings", (SCREENWIDTH/2, SCREENHEIGHT/2), my_settings_function, bg=(255, 0, 0)) #level 1
+button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function, bg=(50, 200, 20)) #level 1
+button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function, bg=(255, 0, 0)) #level 3
+button_03 = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(255, 0, 0)) #level 1
+button_04 = Button("Settings", (SCREENWIDTH/2, SCREENHEIGHT/2), my_settings_function, bg=(86, 184, 255)) #level 1
 button_05 = Button("Sound", (SCREENWIDTH/2, SCREENHEIGHT/2), my_sound_function, bg=(255, 0, 0)) #level 3
 button_06 = Button("Sound On", (SCREENWIDTH/2, SCREENHEIGHT/3), my_sound_on_function, bg=(255, 0, 0)) #level 4
 button_07 = Button("Sound Off", (SCREENWIDTH/2, SCREENHEIGHT/2), my_sound_off_function, bg=(255, 0, 0)) #level 4
