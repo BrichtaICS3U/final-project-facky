@@ -9,6 +9,7 @@ from GameClasses import StaffAOE
 from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
+from GamePlay import Game
 
 pygame.init()
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
@@ -187,7 +188,8 @@ while menuOn:
     elif level == 2:
         for button in level2_buttons:
             button.draw()
-            print ("plaing")
+            pygame.mixer.music.pause()
+            Game ()
 
     elif level == 3:
         for button in level3_buttons:
