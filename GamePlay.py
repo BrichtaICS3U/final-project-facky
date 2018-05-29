@@ -78,6 +78,7 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
+
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
                 if keys [pygame.K_a] :
@@ -96,9 +97,9 @@ def Game () :
                 hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
                 pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
 
-                # - Moves staff when presing and holding e
+                # - Moves staff when presing and holding space
                 for item in pickUpList :
-                        if keys [pygame.K_e] :
+                        if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
                                 staffAOE.moveWithStaff (staff)
                                 staffAOE.kill ()
@@ -141,8 +142,8 @@ def Game () :
                 # Find the distance between player and AOE
                 distance = math.hypot (x1 - x2, y1 - y2)
                 if distance < staffAOE.radius and active == True :
-                        # Checks pressed SpaceBar
-                        if keys [pygame.K_SPACE] :
+                        # Checks pressed e
+                        if keys [pygame.K_e] :
                                 #  - Cooldown portion,
                                 # based off: https://stackoverflow.com/questions/23368999/move-an-object-every-few-seconds-in-pygame?noredirect=1&lq=1
                                 if cooled:
@@ -200,7 +201,7 @@ def Game () :
                 pygame.display.flip()
 
                 # --- Limit to 60 frames per second
-                clock.tick(120)
+                clock.tick(60)
 
         # Once the main program loop is exited, stop the game engine
         pygame.quit()

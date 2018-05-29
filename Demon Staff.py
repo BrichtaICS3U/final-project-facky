@@ -188,6 +188,7 @@ while menuOn:
     elif level == 2:
         for button in level2_buttons:
             button.draw()
+            pygame.mixer.music.pause()
             Game ()
 
     elif level == 3:
