@@ -2,7 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-import pygame, math
+import pygame, math, random
 pygame.init()
 
 from GameClasses import Player
@@ -39,20 +39,21 @@ def Game () :
         player = Player (GREEN, 50, 50, 100)
         player.rect.center = (screenW//2, screenH//2)
 
-        badBoi = Enemy (RED, 0, 0, 100, 4)
-        badBoi.rect.x = 1400
-        badBoi.rect.y = screenH/2
-
         staff = Staff (PURPLE, 0, 0)
-        staff.rect.x = screenW//3
-        staff.rect.y = screenH//2
+        staff.rect.center = (screenW//3, screenH//2)
 
-        staffAOE = StaffAOE (PURPLE, 400, 400, 400//2)
-        staffAOE.rect.x = staff.rect.x - 170
-        staffAOE.rect.y = staff.rect.y - 160
+        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
+        staffAOE.rect.center = staff.rect.center
 
-        spriteList.add(player, badBoi, staff, staffAOE)
-        enemyList.add (badBoi)
+        # Creates 3 enemies in random location
+        for badguy in range (3) :
+                badguy = Enemy (RED, 0, 0, 100, 3)
+                badguy.rect.x = random.randint (-50, 1440) 
+                badguy.rect.y = random.randint (1, screenH)
+                enemyList.add (badguy)
+                spriteList.add (badguy)
+
+        spriteList.add(player, staff, staffAOE)
         objectList.add (staff, staffAOE)
         itemList.add (staff)
 
@@ -78,7 +79,6 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
-
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
                 if keys [pygame.K_a] :
@@ -101,14 +101,16 @@ def Game () :
                 for item in pickUpList :
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
-                                staffAOE.moveWithStaff (staff)
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
+
                         else :
+                                staffAOE.updateAOE (staff)
                                 staffAOE.add (objectList)
                                 staffAOE.add (spriteList)
                                 active = True # When placed down again, can use magic again
-
+        
+                
                 # - Enemies charge to player
                 for enemy in enemyList :
                         enemy.moveToPlayer (player)

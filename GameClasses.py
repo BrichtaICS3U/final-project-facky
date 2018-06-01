@@ -136,10 +136,9 @@ class StaffAOE (Object) :
                 pygame.draw.ellipse (self.image, color, [0, 0, width, height], 10)
                 self.rect = self.image.get_rect ()
 
-        def moveWithStaff (self, item) :
+        def updateAOE (self, item) :
 
-                self.rect.x = item.rect.x - 170
-                self.rect.y = item.rect.y - 160
+                self.rect.center = item.rect.center
                 
 # Class for the staff itself
 class Staff (Object):
