@@ -7,11 +7,6 @@
 # Import the pygame library and initialise the game engine
 import pygame, sys, math
 from ButtonClass import Button
-from GameClasses import Player
-from GameClasses import StaffAOE
-from GameClasses import Staff
-from GameClasses import Enemy
-from GameClasses import FireBall
 from GamePlay import Game
 
 pygame.init()

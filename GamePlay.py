@@ -2,7 +2,11 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
+<<<<<<< HEAD
 import pygame, sys, math
+=======
+import pygame, math, random
+>>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
 pygame.init()
 
 from GameClasses import Player
@@ -10,6 +14,7 @@ from GameClasses import StaffAOE
 from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
+from GameClasses import EnemySpawner
 
 ##def paused():
 ##
@@ -65,32 +70,51 @@ def Game () :
 
         # Create lists
         spriteList = pygame.sprite.Group ()
+        spawnerList = pygame.sprite.Group ()
         enemyList = pygame.sprite.Group ()
         objectList = pygame.sprite.Group ()
         projectileList = pygame.sprite.Group ()
         itemList = pygame.sprite.Group ()
 
         # Create the objects and sets properties
-        player = Player (GREEN, 50, 50, 100)
+        player = Player (GREEN, 50, 50, 4)
         player.rect.center = (screenW//2, screenH//2)
-
-        badBoi = Enemy (RED, 0, 0, 100, 4)
-        badBoi.rect.x = 1400
-        badBoi.rect.y = screenH/2
 
         staff = Staff (PURPLE, 0, 0)
         staff.rect.center = (screenW//3, screenH//2)
+<<<<<<< HEAD
+
+        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
+        staffAOE.rect.center = staff.rect.center
+=======
 
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
 
-        spriteList.add(player, badBoi, staff, staffAOE)
-        enemyList.add (badBoi)
+        spawner = EnemySpawner (RED, 50, 50)
+        spawner.rect.center = (-50, -50)
+
+        spawner2 = EnemySpawner (RED, 50, 50)
+        spawner2.rect.center = (1450, -50)
+
+        spawner3 = EnemySpawner (RED, 50, 50)
+        spawner3.rect.center = (-50, 835)
+
+        spawner4 = EnemySpawner (RED, 50, 50)
+        spawner4.rect.center = (1450, 835)
+>>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
+
+        spawnerList.add (spawner, spawner2, spawner3, spawner4)
+
+        spriteList.add (player, staff, staffAOE, spawner, spawner2, spawner3, spawner4)
         objectList.add (staff, staffAOE)
         itemList.add (staff)
 
         # Check if staff placed or not
         active = True
+
+        # Switch of when you need to spawn enemies
+        spawnTime = 0
 
         # A cooldown event and boolean to see it's state
         cooldownEvent = pygame.USEREVENT
@@ -104,6 +128,8 @@ def Game () :
         #---------Main Program Loop----------
         while carryOn:
 
+                spawnTime += 1
+
                 # --- Main event loop ---
                 for event in pygame.event.get(): # Player did something
                         if event.type == pygame.QUIT: # Player clicked close button
@@ -112,6 +138,10 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
+<<<<<<< HEAD
+=======
+                # - WASD controls
+>>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
                 keys = pygame.key.get_pressed ()
 
                 #pause key
@@ -148,21 +178,46 @@ def Game () :
                 for item in pickUpList :
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
+<<<<<<< HEAD
                                 staffAOE.updateAOE (staff)
+=======
+>>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
+
                         else :
+                                staffAOE.updateAOE (staff)
                                 staffAOE.add (objectList)
                                 staffAOE.add (spriteList)
                                 active = True # When placed down again, can use magic again
 
+                # - Creates random amount of enemies in random locations
+                if spawnTime == 1000 :
+                        for badguy in range (random.randint (1, 5)) :
+                        
+                                badguy = Enemy (RED, 0, 0, 4, 3)
+                        
+                                corner = random.randint (1, 4)
+                                if corner == 1 :
+                                        badguy.rect.center = spawner.rect.center
+                                if corner == 2 :
+                                        badguy.rect.center = spawner2.rect.center
+                                if corner == 3 :
+                                        badguy.rect.center = spawner3.rect.center
+                                if corner == 4 :
+                                        badguy.rect.center = spawner4.rect.center
+                                        
+                                enemyList.add (badguy)
+                                spriteList.add (badguy)
+                        spawnTime = 0
+                
                 # - Enemies charge to player
                 for enemy in enemyList :
                         enemy.moveToPlayer (player)
 
                 # - Does dmg when player toches enemy
                 for bad in hurtList :
-                        player.health -= 25
+                        player.health -= 1
 
                         if bad.rect.x > player.rect.x :
                                 player.rect.x -= 100
@@ -219,7 +274,7 @@ def Game () :
 
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
-                                badboi.health -= 25
+                                badboi.health -= 1
                                 print (badboi.health)
 
                                 projectileList.remove (fireBall)
@@ -242,7 +297,7 @@ def Game () :
 
                 # - Health Bar
                 pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
-                pygame.draw.rect (screen, GREEN, [10, 10, player.health * 2, 50])
+                pygame.draw.rect (screen, GREEN, [10, 10, player.health * 50, 50])
 
                 # Update the screen with queued shapes
                 pygame.display.flip()
