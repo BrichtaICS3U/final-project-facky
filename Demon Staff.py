@@ -1,6 +1,9 @@
 # Pygame Template File
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
+# Work Sited
+# Dragon Ball Music https://www.youtube.com/watch?v=PkgfX6UaQU8&t=28s
+
 # Import the pygame library and initialise the game engine
 import pygame, sys, math
 from ButtonClass import Button
@@ -101,7 +104,7 @@ def my_confirm_function():
     """A function that retreats to the previous level"""
     global level
     level = 3
-    
+
 def mousebuttondown(level):
     """A function that checks which button was pressed"""
     pos = pygame.mouse.get_pos()
@@ -132,6 +135,7 @@ def mousebuttondown(level):
 
 level = 1
 menuOn = True
+#gameOn = False
 
 #create button objects
 button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function, bg=(50, 200, 20)) #level 1
@@ -186,10 +190,14 @@ while menuOn:
             button.draw()
             
     elif level == 2:
+        #gameOn = True
         for button in level2_buttons:
             button.draw()
-            pygame.mixer.music.pause()
-            Game ()
+        pygame.mixer.music.load('MainTheme.mp3')
+        pygame.mixer.music.play(0)
+        pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
+        pygame.mixer.music.play(-1)
+        Game ()
 
     elif level == 3:
         for button in level3_buttons:

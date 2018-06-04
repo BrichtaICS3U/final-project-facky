@@ -2,7 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-import pygame, math
+import pygame, sys, math
 pygame.init()
 
 from GameClasses import Player
@@ -10,6 +10,41 @@ from GameClasses import StaffAOE
 from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
+
+##def paused():
+##
+##        pause = True
+##        quitgame = pygame.quit()
+##        
+##        screenW = 1400
+##        screenH = 785
+##        size = (screenW, screenH)
+##        screen = pygame.display.set_mode(size)
+##
+##        BLACK = (0, 0, 0)
+##        WHITE = (255, 255, 255)
+##        GREEN = (0, 255, 0)
+##        BRIGHT_GREEN = (0, 200, 0)
+##        RED = (255, 0, 0)
+##        BRIGHT_RED = (200, 0, 0)
+##        PURPLE = (174, 20, 188)
+##
+##        fontTitle = pygame.font.Font('freesansbold.ttf',32)
+##        textSurfaceTitle = fontTitle.render('Pause', True, BLACK) 
+##        textRectTitle = textSurfaceTitle.get_rect()
+##        textRectTitle.center = ((screenW/2),(screenH/2))
+##        screen.blit(textSurfaceTitle, textRectTitle)
+##        button = screen.blit
+##        while pause:
+##                for event in pygame.event.get():
+##                        if event.type == pygame.QUIT:
+##                                pygame.quit()
+##                button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN, pause == False)
+##                button("Quit",550,450,100,50,RED,BRIGHT_RED,quitgame)
+##
+##                pygame.display.update()
+
+                        
 
 def Game () :
         # Define some colours
@@ -44,12 +79,10 @@ def Game () :
         badBoi.rect.y = screenH/2
 
         staff = Staff (PURPLE, 0, 0)
-        staff.rect.x = screenW//3
-        staff.rect.y = screenH//2
+        staff.rect.center = (screenW//3, screenH//2)
 
-        staffAOE = StaffAOE (PURPLE, 400, 400, 400//2)
-        staffAOE.rect.x = staff.rect.x - 170
-        staffAOE.rect.y = staff.rect.y - 160
+        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
+        staffAOE.rect.center = staff.rect.center
 
         spriteList.add(player, badBoi, staff, staffAOE)
         enemyList.add (badBoi)
@@ -66,6 +99,7 @@ def Game () :
         # This loop will continue until the user exits the game
         carryOn = True
         clock = pygame.time.Clock ()
+        pause = False
 
         #---------Main Program Loop----------
         while carryOn:
@@ -78,9 +112,21 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
-
-                # - WASD controls
                 keys = pygame.key.get_pressed ()
+
+                #pause key
+##                if event.type == pygame.KEYDOWN:
+##                        if event.key == pygame.K_ESCAPE and pause == False:
+##                                pause = True
+##                        if event.key == pygame.K_ESCAPE and pause == True:
+##                                pause == False
+
+##                if pause == True:
+##                        paused()
+
+##                elif pause == False: 
+                        # - WASD controls
+
                 if keys [pygame.K_a] :
                         player.moveLeft (5)
                 if keys [pygame.K_d] :
@@ -89,6 +135,7 @@ def Game () :
                         player.moveUp (5)
                 if keys [pygame.K_s] :
                         player.moveDown (5)
+                
 
                 # --- Game logic goes here
                 spriteList.update ()
@@ -101,7 +148,7 @@ def Game () :
                 for item in pickUpList :
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
-                                staffAOE.moveWithStaff (staff)
+                                staffAOE.updateAOE (staff)
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
                         else :
