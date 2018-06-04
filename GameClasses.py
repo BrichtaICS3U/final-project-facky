@@ -155,6 +155,13 @@ class Staff (Object):
 
                 self.rect.x = player.rect.x
                 self.rect.y = player.rect.y
+
+class EnemySpawner (Object) :
+
+        def __init__ (self, color, width, height) :
+                super().__init__(color, width, height)
+
+                self.rect = self.image.get_rect ()
             
 # Super class for projectiles
 # Based from : http://programarcadegames.com/python_examples/en/bullets_aimed.py
