@@ -2,11 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-<<<<<<< HEAD
-import pygame, sys, math
-=======
-import pygame, math, random
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
+import pygame, sys, math, random
 pygame.init()
 
 from GameClasses import Player
@@ -68,6 +64,28 @@ def Game () :
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
 
+        # - Create some tutorial text on the floor of the game
+        demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
+        # W
+        wText = demonFont.render('W', True, BLACK)
+        wTextRect = wText.get_rect()
+        wTextRect.center = (screenW/2, screenH/3)
+        # S 
+        sText = demonFont.render('S', True, BLACK)
+        sTextRect = sText.get_rect()
+        sTextRect.center = (screenW/2, screenH/1.5)
+        # A
+        aText = demonFont.render('A', True, BLACK)
+        aTextRect = aText.get_rect()
+        aTextRect.center = (screenW/4, screenH/2)
+        # D
+        dText = demonFont.render('D', True, BLACK)
+        dTextRect = dText.get_rect()
+        dTextRect.center = (screenW * 3/4, screenH/2)
+
+        eText = demonFont.render('', True, BLACK)
+        eTextRect = eText.get_rect()
+        
         # Create lists
         spriteList = pygame.sprite.Group ()
         spawnerList = pygame.sprite.Group ()
@@ -82,11 +100,6 @@ def Game () :
 
         staff = Staff (PURPLE, 0, 0)
         staff.rect.center = (screenW//3, screenH//2)
-<<<<<<< HEAD
-
-        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
-        staffAOE.rect.center = staff.rect.center
-=======
 
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
@@ -102,7 +115,6 @@ def Game () :
 
         spawner4 = EnemySpawner (RED, 50, 50)
         spawner4.rect.center = (1450, 835)
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
 
         spawnerList.add (spawner, spawner2, spawner3, spawner4)
 
@@ -113,8 +125,10 @@ def Game () :
         # Check if staff placed or not
         active = True
 
-        # Switch of when you need to spawn enemies
+        # Timer of when you need to spawn enemies
         spawnTime = 0
+        # Check if first wave has passed
+        passedFirstWave = 0
 
         # A cooldown event and boolean to see it's state
         cooldownEvent = pygame.USEREVENT
@@ -138,10 +152,7 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
-<<<<<<< HEAD
-=======
                 # - WASD controls
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
                 keys = pygame.key.get_pressed ()
 
                 #pause key
@@ -154,9 +165,9 @@ def Game () :
 ##                if pause == True:
 ##                        paused()
 
-##                elif pause == False: 
-                        # - WASD controls
-
+##                elif pause == False:
+                
+                # - WASD controls
                 if keys [pygame.K_a] :
                         player.moveLeft (5)
                 if keys [pygame.K_d] :
@@ -176,12 +187,11 @@ def Game () :
 
                 # - Moves staff when presing and holding space
                 for item in pickUpList :
+                        
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
-<<<<<<< HEAD
                                 staffAOE.updateAOE (staff)
-=======
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
+
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
 
@@ -193,7 +203,15 @@ def Game () :
 
                 # - Creates random amount of enemies in random locations
                 if spawnTime == 1000 :
-                        for badguy in range (random.randint (1, 5)) :
+                        amount = 0
+                        if passedFirstWave == 0 :
+                                amount = 1
+                                print ("how many:", amount)
+                        else :
+                                amount = random.randint (0, 5)
+                                print ("how many:", amount)
+                                
+                        for badguy in range (amount) :
                         
                                 badguy = Enemy (RED, 0, 0, 4, 3)
                         
@@ -210,6 +228,8 @@ def Game () :
                                 enemyList.add (badguy)
                                 spriteList.add (badguy)
                         spawnTime = 0
+                        passedFirstWave = 1 
+                
                 
                 # - Enemies charge to player
                 for enemy in enemyList :
@@ -244,6 +264,10 @@ def Game () :
                 # Find the distance between player and AOE
                 distance = math.hypot (x1 - x2, y1 - y2)
                 if distance < staffAOE.radius and active == True :
+
+                        eText = demonFont.render('Press E', True, BLACK)
+                        eTextRect.center = (player.rect.x, player.rect.y - 70)
+
                         # Checks pressed e
                         if keys [pygame.K_e] :
                                 #  - Cooldown portion,
@@ -266,6 +290,8 @@ def Game () :
 
                                         # Start cooldown timer
                                         pygame.time.set_timer (cooldownEvent, 3000)
+                else :
+                        eText = demonFont.render ("", True, BLACK)
 
                 # Check for every fireball projectile
                 for fireball in projectileList :
@@ -282,6 +308,7 @@ def Game () :
 
                                 if badboi.health <= 0 :
                                         badboi.kill ()
+                                        
 
                         # When goes off screen, remove fireball
                         if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
@@ -293,7 +320,15 @@ def Game () :
                 screen.fill(WHITE)
 
                 # Queue different shapes and lines to be drawn
+                # - Draw all sprites
                 spriteList.draw (screen)
+                
+                # - Devil's writing
+                screen.blit (wText, wTextRect)
+                screen.blit (sText, sTextRect)
+                screen.blit (aText, aTextRect)
+                screen.blit (dText, dTextRect)
+                screen.blit (eText, eTextRect)
 
                 # - Health Bar
                 pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
