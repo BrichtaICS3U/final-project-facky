@@ -2,11 +2,7 @@
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
 # Import the pygame library and initialise the game engine
-<<<<<<< HEAD
-import pygame, sys, math
-=======
-import pygame, math, random
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
+import pygame, sys, math, random
 pygame.init()
 
 from GameClasses import Player
@@ -82,11 +78,9 @@ def Game () :
 
         staff = Staff (PURPLE, 0, 0)
         staff.rect.center = (screenW//3, screenH//2)
-<<<<<<< HEAD
 
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
-=======
 
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
@@ -102,7 +96,6 @@ def Game () :
 
         spawner4 = EnemySpawner (RED, 50, 50)
         spawner4.rect.center = (1450, 835)
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
 
         spawnerList.add (spawner, spawner2, spawner3, spawner4)
 
@@ -138,10 +131,7 @@ def Game () :
                                 cooled = True
                                 pygame.time.set_timer (cooldownEvent, 0)
 
-<<<<<<< HEAD
-=======
                 # - WASD controls
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
                 keys = pygame.key.get_pressed ()
 
                 #pause key
@@ -178,10 +168,7 @@ def Game () :
                 for item in pickUpList :
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
-<<<<<<< HEAD
                                 staffAOE.updateAOE (staff)
-=======
->>>>>>> 1c16047491b063bb3b903de69df022eecde89c90
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
 
