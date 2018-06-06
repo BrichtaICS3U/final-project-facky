@@ -38,7 +38,7 @@ pygame.display.set_caption("Demon Staff")
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('freesansbold.ttf', 32)
+fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 75)
 textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text

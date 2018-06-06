@@ -107,9 +107,6 @@ def Game () :
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
 
-        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
-        staffAOE.rect.center = staff.rect.center
-
         spawner = EnemySpawner (RED, 50, 50)
         spawner.rect.center = (-50, -50)
 
@@ -271,7 +268,7 @@ def Game () :
                 if distance < staffAOE.radius and active == True :
 
                         eText = demonFont.render('Press E', True, BLACK)
-                        eTextRect.center = (player.rect.x, player.rect.y - 70)
+                        eTextRect.center = (player.rect.x - 10, player.rect.y - 30)
 
                         spacebarText = demonFont.render('Hold SpaceBar', True, BLACK)
                         spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
