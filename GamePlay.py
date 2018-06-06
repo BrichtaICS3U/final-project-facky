@@ -107,6 +107,9 @@ def Game () :
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
 
+        staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
+        staffAOE.rect.center = staff.rect.center
+
         spawner = EnemySpawner (RED, 50, 50)
         spawner.rect.center = (-50, -50)
 
@@ -194,7 +197,6 @@ def Game () :
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
                                 staffAOE.updateAOE (staff)
-
                                 staffAOE.kill ()
                                 active = False # Makes so can't use magic
 
