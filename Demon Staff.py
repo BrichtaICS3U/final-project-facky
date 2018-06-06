@@ -38,10 +38,11 @@ pygame.display.set_caption("Demon Staff")
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('freesansbold.ttf', 32)
+fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 75)
 textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
+playSong = True
 
 def my_next_function():
     """A function that advances to the next level"""
@@ -92,8 +93,11 @@ def my_music_on_function():
 def my_music_off_function():
     """A function that retreats to the previous level"""
     global level
+    global playSong
     level += 0
     pygame.mixer.music.pause()
+    playSong = False
+    print("song off")
     
 def my_confirm_function():
     """A function that retreats to the previous level"""
@@ -130,8 +134,9 @@ def mousebuttondown(level):
 
 level = 1
 menuOn = True
-#gameOn = False
-
+songA = True
+songB = False
+song = True
 #create button objects
 button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function, bg=(50, 200, 20)) #level 1
 button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function, bg=(255, 0, 0)) #level 3
@@ -188,11 +193,28 @@ while menuOn:
         #gameOn = True
         for button in level2_buttons:
             button.draw()
-        pygame.mixer.music.load('MainTheme.mp3')
-        pygame.mixer.music.play(0)
+##        pygame.mixer.music.stop()
         pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
         pygame.mixer.music.play(-1)
+
+        if playSong == False:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.play(-1)
+
+        
+##        if songA == True and songB == False :
+##            pygame.mixer.music.load('MainTheme.mp3')
+##            pygame.mixer.music.play(0)
+##            songA = False
+##            songB = True
+##
+##        elif songA == False and songB == True:
+##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
+##            pygame.mixer.music.play(-1)
+        
         Game ()
+
 
     elif level == 3:
         for button in level3_buttons:
