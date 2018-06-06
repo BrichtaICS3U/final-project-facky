@@ -85,6 +85,9 @@ def Game () :
 
         eText = demonFont.render('', True, BLACK)
         eTextRect = eText.get_rect()
+
+        spacebarText = demonFont.render('', True, BLACK)
+        spacebarTextRect = spacebarText.get_rect ()
         
         # Create lists
         spriteList = pygame.sprite.Group ()
@@ -209,7 +212,7 @@ def Game () :
                                 print ("how many:", amount)
                         else :
                                 amount = random.randint (0, 5)
-                                print ("how many:", amount)
+                                print ("how many:", amount-1)
                                 
                         for badguy in range (amount) :
                         
@@ -227,6 +230,7 @@ def Game () :
                                         
                                 enemyList.add (badguy)
                                 spriteList.add (badguy)
+                                
                         spawnTime = 0
                         passedFirstWave = 1 
                 
@@ -257,8 +261,7 @@ def Game () :
                 # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
 
                 #  Find pos of player and AOE
-                x1 = player.rect.x
-                y1 = player.rect.y
+                x1, y1 = player.rect.center
                 x2, y2 = staffAOE.rect.center
 
                 # Find the distance between player and AOE
@@ -267,6 +270,9 @@ def Game () :
 
                         eText = demonFont.render('Press E', True, BLACK)
                         eTextRect.center = (player.rect.x, player.rect.y - 70)
+
+                        spacebarText = demonFont.render('Hold SpaceBar', True, BLACK)
+                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
 
                         # Checks pressed e
                         if keys [pygame.K_e] :
@@ -293,10 +299,13 @@ def Game () :
                 else :
                         eText = demonFont.render ("", True, BLACK)
 
+                        spacebarText = demonFont.render('', True, BLACK)
+                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
+
                 # Check for every fireball projectile
                 for fireball in projectileList :
                         # Creates a collision list for enemies
-                        enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False)
+                        enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False, pygame.sprite.collide_mask)
 
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
@@ -329,6 +338,7 @@ def Game () :
                 screen.blit (aText, aTextRect)
                 screen.blit (dText, dTextRect)
                 screen.blit (eText, eTextRect)
+                screen.blit (spacebarText, spacebarTextRect)
 
                 # - Health Bar
                 pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
