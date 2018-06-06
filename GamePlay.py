@@ -12,41 +12,6 @@ from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
 
-##def paused():
-##
-##        pause = True
-##        quitgame = pygame.quit()
-##        
-##        screenW = 1400
-##        screenH = 785
-##        size = (screenW, screenH)
-##        screen = pygame.display.set_mode(size)
-##
-##        BLACK = (0, 0, 0)
-##        WHITE = (255, 255, 255)
-##        GREEN = (0, 255, 0)
-##        BRIGHT_GREEN = (0, 200, 0)
-##        RED = (255, 0, 0)
-##        BRIGHT_RED = (200, 0, 0)
-##        PURPLE = (174, 20, 188)
-##
-##        fontTitle = pygame.font.Font('freesansbold.ttf',32)
-##        textSurfaceTitle = fontTitle.render('Pause', True, BLACK) 
-##        textRectTitle = textSurfaceTitle.get_rect()
-##        textRectTitle.center = ((screenW/2),(screenH/2))
-##        screen.blit(textSurfaceTitle, textRectTitle)
-##        button = screen.blit
-##        while pause:
-##                for event in pygame.event.get():
-##                        if event.type == pygame.QUIT:
-##                                pygame.quit()
-##                button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN, pause == False)
-##                button("Quit",550,450,100,50,RED,BRIGHT_RED,quitgame)
-##
-##                pygame.display.update()
-
-                        
-
 def Game () :
         # Define some colours
         # Colours are defined using RGB values
@@ -98,7 +63,7 @@ def Game () :
         itemList = pygame.sprite.Group ()
 
         # Create the objects and sets properties
-        player = Player (GREEN, 50, 50, 4)
+        player = Player (GREEN, 50, 50, 5)
         player.rect.center = (screenW//2, screenH//2)
 
         staff = Staff (PURPLE, 0, 0)
@@ -157,18 +122,6 @@ def Game () :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
-
-                #pause key
-##                if event.type == pygame.KEYDOWN:
-##                        if event.key == pygame.K_ESCAPE and pause == False:
-##                                pause = True
-##                        if event.key == pygame.K_ESCAPE and pause == True:
-##                                pause == False
-
-##                if pause == True:
-##                        paused()
-
-##                elif pause == False:
                 
                 # - WASD controls
                 if keys [pygame.K_a] :
@@ -340,7 +293,7 @@ def Game () :
                 screen.blit (spacebarText, spacebarTextRect)
 
                 # - Health Bar
-                pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
+                pygame.draw.rect (screen, BLACK, [5, 5, (player.health * 50) + 10, 60], 10)
                 pygame.draw.rect (screen, GREEN, [10, 10, player.health * 50, 50])
 
                 # Update the screen with queued shapes
