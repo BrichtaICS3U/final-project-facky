@@ -11,42 +11,7 @@ from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
-
-##def paused():
-##
-##        pause = True
-##        quitgame = pygame.quit()
-##        
-##        screenW = 1400
-##        screenH = 785
-##        size = (screenW, screenH)
-##        screen = pygame.display.set_mode(size)
-##
-##        BLACK = (0, 0, 0)
-##        WHITE = (255, 255, 255)
-##        GREEN = (0, 255, 0)
-##        BRIGHT_GREEN = (0, 200, 0)
-##        RED = (255, 0, 0)
-##        BRIGHT_RED = (200, 0, 0)
-##        PURPLE = (174, 20, 188)
-##
-##        fontTitle = pygame.font.Font('freesansbold.ttf',32)
-##        textSurfaceTitle = fontTitle.render('Pause', True, BLACK) 
-##        textRectTitle = textSurfaceTitle.get_rect()
-##        textRectTitle.center = ((screenW/2),(screenH/2))
-##        screen.blit(textSurfaceTitle, textRectTitle)
-##        button = screen.blit
-##        while pause:
-##                for event in pygame.event.get():
-##                        if event.type == pygame.QUIT:
-##                                pygame.quit()
-##                button("Continue",150,450,100,50,GREEN,BRIGHT_GREEN, pause == False)
-##                button("Quit",550,450,100,50,RED,BRIGHT_RED,quitgame)
-##
-##                pygame.display.update()
-
                         
-
 def Game () :
         # Define some colours
         # Colours are defined using RGB values
