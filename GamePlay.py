@@ -12,7 +12,7 @@ from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
                         
-def Game () :
+def Game (background) :
         # Define some colours
         # Colours are defined using RGB values
         BLACK = (0, 0, 0)
@@ -20,6 +20,7 @@ def Game () :
         GREEN = (0, 255, 0)
         RED = (255, 0, 0)
         PURPLE = (174, 20, 188)
+        BROWN = (84, 31, 10)
 
         screenW = 1400
         screenH = 785
@@ -28,6 +29,8 @@ def Game () :
         size = (screenW, screenH)
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
+##        screen.blit(background, (0, 0))
+        #background = pygame.image.load('Demon Staff - Background.png')
 
         # - Create some tutorial text on the floor of the game
         demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
@@ -270,7 +273,7 @@ def Game () :
                 for fireball in projectileList :
                         # Creates a collision list for enemies
                         enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False, pygame.sprite.collide_mask)
-
+                        enemyKilled = 0
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
                                 badboi.health -= 1
@@ -281,6 +284,8 @@ def Game () :
 
                                 if badboi.health <= 0 :
                                         badboi.kill ()
+                                        enemyKilled = enemyKilled + 1
+                                print("Score:", enemyKilled)
                                         
 
                         # When goes off screen, remove fireball
@@ -290,7 +295,8 @@ def Game () :
                 # --- Draw code goes here
 
                 # - Clear the screen to white
-                screen.fill(WHITE)
+                screen.fill(BROWN)
+##                screen.blit(background, (0, 0))
 
                 # Queue different shapes and lines to be drawn
                 # - Draw all sprites

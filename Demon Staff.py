@@ -26,6 +26,7 @@ BLUE = (0, 0, 200)
 BRIGHT_BLUE = (0, 0, 255)
 ORANGE = (255, 165, 0)
 PURPLE = (174, 20, 188)
+BROWN = (84, 31, 10)
 
 # Open a new window
 # The window is defined as (width, height), measured in pixels
@@ -34,6 +35,7 @@ SCREENHEIGHT = 785
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Demon Staff")
+background = pygame.image.load('Demon Staff - Background.png')
 
 # --- Text elements
 
@@ -180,7 +182,8 @@ while menuOn:
     # --- Draw code goes here
 
     # Clear the screen to white
-    screen.fill(WHITE)
+    screen.fill(BROWN)
+##    screen.blit(background, (0, 0))
 
     # Queue shapes to be drawn
     
@@ -213,7 +216,8 @@ while menuOn:
 ##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
 ##            pygame.mixer.music.play(-1)
         
-        Game ()
+        Game (background)
+        #screen.blit(background, (0, 0))
 
 
     elif level == 3:
