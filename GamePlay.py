@@ -23,11 +23,36 @@ def Game () :
 
         screenW = 1400
         screenH = 785
+
+        # Check if staff placed or not
+        active = True
+
+        # Timer of when you need to spawn enemies
+        spawnTime = 0
+        # Check if first wave has passed
+        passedFirstWave = 0
+
+        # A cooldown event and boolean to see it's state
+        cooldownEvent = pygame.USEREVENT
+        cooled = True
+
+        killCount = 0
+
+        # This loop will continue until the user exits the game
+        carryOn = True
+        clock = pygame.time.Clock ()
+
         # Open a new window
         # The window is defined as (width, height), measured in pixels
         size = (screenW, screenH)
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
+
+        pygame.mouse.set_visible (False)
+
+        hitMarker = pygame.image.load ('hitMarker.png')
+        hitMarker = pygame.transform.scale(hitMarker, (50, 50))
+        hitMarkerRect = hitMarker.get_rect ()
 
         # - Create some tutorial text on the floor of the game
         demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
@@ -47,13 +72,34 @@ def Game () :
         dText = demonFont.render('D', True, BLACK)
         dTextRect = dText.get_rect()
         dTextRect.center = (screenW * 3/4, screenH/2)
-
+        # The press e buttom
         eText = demonFont.render('', True, BLACK)
         eTextRect = eText.get_rect()
-
+        # SpaceBar
         spacebarText = demonFont.render('', True, BLACK)
         spacebarTextRect = spacebarText.get_rect ()
+
+        devilText = demonFont.render('Get close...', True, BLACK)
+        devilTextRect = spacebarText.get_rect ()
+        devilTextRect.center = (400, 100)
+
+        devil2Text = demonFont.render('and hold that staff...', True, BLACK)
+        devil2TextRect = spacebarText.get_rect ()
+        devil2TextRect.center = (250, 300)
+
+        devil3Text = demonFont.render('do it with Spacebar!', True, BLACK)
+        devil3TextRect = spacebarText.get_rect ()
+        devil3TextRect.center = (screenW//3, 500)
         
+        # The text to tell how many killed
+        killText = demonFont.render ('Slain: ', True, BLACK)
+        killTextRect = killText.get_rect ()
+        killTextRect.center = (80, 110)
+        # The counter for the killed
+        killCountText = demonFont.render (str(killCount), True, BLACK)
+        killCountTextRect = killCountText.get_rect ()
+        killCountTextRect.center = (180, 110)
+
         # Create lists
         spriteList = pygame.sprite.Group ()
         spawnerList = pygame.sprite.Group ()
@@ -90,27 +136,12 @@ def Game () :
         objectList.add (staff, staffAOE)
         itemList.add (staff)
 
-        # Check if staff placed or not
-        active = True
-
-        # Timer of when you need to spawn enemies
-        spawnTime = 0
-        # Check if first wave has passed
-        passedFirstWave = 0
-
-        # A cooldown event and boolean to see it's state
-        cooldownEvent = pygame.USEREVENT
-        cooled = True
-
-        # This loop will continue until the user exits the game
-        carryOn = True
-        clock = pygame.time.Clock ()
-        pause = False
 
         #---------Main Program Loop----------
         while carryOn:
 
                 spawnTime += 1
+                hitMarkerRect.center = pygame.mouse.get_pos ()
 
                 # --- Main event loop ---
                 for event in pygame.event.get(): # Player did something
@@ -126,14 +157,18 @@ def Game () :
                 # - WASD controls
                 if keys [pygame.K_a] :
                         player.moveLeft (5)
+                        aText = demonFont.render ('', True, BLACK)
                 if keys [pygame.K_d] :
                         player.moveRight (5)
+                        dText = demonFont.render ('', True, BLACK)
                 if keys [pygame.K_w] :
                         player.moveUp (5)
+                        wText = demonFont.render ('', True, BLACK)
                 if keys [pygame.K_s] :
                         player.moveDown (5)
-                
+                        sText = demonFont.render ('', True, BLACK)
 
+                
                 # --- Game logic goes here
                 spriteList.update ()
 
@@ -217,14 +252,11 @@ def Game () :
                 x2, y2 = staffAOE.rect.center
 
                 # Find the distance between player and AOE
-                distance = math.hypot (x1 - x2, y1 - y2)
-                if distance < staffAOE.radius and active == True :
+                AOEDistance = math.hypot (x1 - x2, y1 - y2)
+                if AOEDistance < staffAOE.radius and active == True :
 
                         eText = demonFont.render('Press E', True, BLACK)
-                        eTextRect.center = (player.rect.x - 10, player.rect.y - 30)
-
-                        spacebarText = demonFont.render('Hold SpaceBar', True, BLACK)
-                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
+                        eTextRect.center = (player.rect.x - 10, player.rect.y - 30) 
 
                         # Checks pressed e
                         if keys [pygame.K_e] :
@@ -250,10 +282,7 @@ def Game () :
                                         pygame.time.set_timer (cooldownEvent, 3000)
                 else :
                         eText = demonFont.render ("", True, BLACK)
-
-                        spacebarText = demonFont.render('', True, BLACK)
-                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
-
+                        
                 # Check for every fireball projectile
                 for fireball in projectileList :
                         # Creates a collision list for enemies
@@ -269,7 +298,7 @@ def Game () :
 
                                 if badboi.health <= 0 :
                                         badboi.kill ()
-                                        
+                                        killCount += 1
 
                         # When goes off screen, remove fireball
                         if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
@@ -291,9 +320,18 @@ def Game () :
                 screen.blit (dText, dTextRect)
                 screen.blit (eText, eTextRect)
                 screen.blit (spacebarText, spacebarTextRect)
+                screen.blit (killText, killTextRect)
+                screen.blit (killCountText, killCountTextRect)
+                screen.blit (devilText, devilTextRect)
+                screen.blit (devil2Text, devil2TextRect)
+                screen.blit (devil3Text, devil3TextRect)
+                screen.blit (hitMarker, hitMarkerRect)
+
+
+                killCountText = demonFont.render (str(killCount), True, BLACK)
 
                 # - Health Bar
-                pygame.draw.rect (screen, BLACK, [5, 5, (player.health * 50) + 10, 60], 10)
+                pygame.draw.rect (screen, BLACK, [5, 5, 250 + 10, 60], 10)
                 pygame.draw.rect (screen, GREEN, [10, 10, player.health * 50, 50])
 
                 # Update the screen with queued shapes
