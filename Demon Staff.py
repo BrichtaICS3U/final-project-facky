@@ -182,7 +182,6 @@ while menuOn:
     # --- Draw code goes here
 
     # Clear the screen to white
-    screen.fill(WHITE)
     screen.fill(BROWN)
 ##    screen.blit(background, (0, 0))
 
