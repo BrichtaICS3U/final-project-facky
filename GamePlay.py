@@ -11,8 +11,8 @@ from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
-
-def Game () :
+                        
+def Game (background) :
         # Define some colours
         # Colours are defined using RGB values
         BLACK = (0, 0, 0)
@@ -20,6 +20,7 @@ def Game () :
         GREEN = (0, 255, 0)
         RED = (255, 0, 0)
         PURPLE = (174, 20, 188)
+        BROWN = (84, 31, 10)
 
         screenW = 1400
         screenH = 785
@@ -47,6 +48,8 @@ def Game () :
         size = (screenW, screenH)
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
+##        screen.blit(background, (0, 0))
+        #background = pygame.image.load('Demon Staff - Background.png')
 
         pygame.mouse.set_visible (False)
 
@@ -109,7 +112,7 @@ def Game () :
         itemList = pygame.sprite.Group ()
 
         # Create the objects and sets properties
-        player = Player (GREEN, 50, 50, 5)
+        player = Player (GREEN, 50, 50, 4)
         player.rect.center = (screenW//2, screenH//2)
 
         staff = Staff (PURPLE, 0, 0)
@@ -153,6 +156,18 @@ def Game () :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
+
+                #pause key
+##                if event.type == pygame.KEYDOWN:
+##                        if event.key == pygame.K_ESCAPE and pause == False:
+##                                pause = True
+##                        if event.key == pygame.K_ESCAPE and pause == True:
+##                                pause == False
+
+##                if pause == True:
+##                        paused()
+
+##                elif pause == False:
                 
                 # - WASD controls
                 if keys [pygame.K_a] :
@@ -256,7 +271,14 @@ def Game () :
                 if AOEDistance < staffAOE.radius and active == True :
 
                         eText = demonFont.render('Press E', True, BLACK)
+<<<<<<< HEAD
                         eTextRect.center = (player.rect.x - 10, player.rect.y - 30) 
+=======
+                        eTextRect.center = (player.rect.x, player.rect.y - 70)
+
+                        spacebarText = demonFont.render('Hold SpaceBar', True, BLACK)
+                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
+>>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
 
                         # Checks pressed e
                         if keys [pygame.K_e] :
@@ -287,7 +309,7 @@ def Game () :
                 for fireball in projectileList :
                         # Creates a collision list for enemies
                         enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False, pygame.sprite.collide_mask)
-
+                        enemyKilled = 0
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
                                 badboi.health -= 1
@@ -298,7 +320,13 @@ def Game () :
 
                                 if badboi.health <= 0 :
                                         badboi.kill ()
+<<<<<<< HEAD
                                         killCount += 1
+=======
+                                        enemyKilled = enemyKilled + 1
+                                print("Score:", enemyKilled)
+                                        
+>>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
 
                         # When goes off screen, remove fireball
                         if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
@@ -307,7 +335,8 @@ def Game () :
                 # --- Draw code goes here
 
                 # - Clear the screen to white
-                screen.fill(WHITE)
+                screen.fill(BROWN)
+##                screen.blit(background, (0, 0))
 
                 # Queue different shapes and lines to be drawn
                 # - Draw all sprites
@@ -331,7 +360,11 @@ def Game () :
                 killCountText = demonFont.render (str(killCount), True, BLACK)
 
                 # - Health Bar
+<<<<<<< HEAD
                 pygame.draw.rect (screen, BLACK, [5, 5, 250 + 10, 60], 10)
+=======
+                pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
+>>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
                 pygame.draw.rect (screen, GREEN, [10, 10, player.health * 50, 50])
 
                 # Update the screen with queued shapes
