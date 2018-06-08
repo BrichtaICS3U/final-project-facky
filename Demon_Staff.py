@@ -7,7 +7,7 @@
 # Import the pygame library and initialise the game engine
 import pygame, sys, math
 
-# Import
+# Import nessary classes
 from ButtonClass import Button
 from GamePlay import Game
 
@@ -41,6 +41,8 @@ pygame.display.set_caption("Demon Staff")
 # --- Text elements
 
 # Define text for title of game
+# Font source: Demons & Darlings Font by Chad Savage,
+#              http://www.sinisterfonts.com
 fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 120)
 textSurfaceTitle = fontTitle.render('Demon Staff', True, PURPLE) 
 textRectTitle = textSurfaceTitle.get_rect()
@@ -172,7 +174,6 @@ while menuOn:
             button.draw()
             
     elif level == 2:
-        #gameOn = True
         for button in level2_buttons:
             button.draw()
         pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
