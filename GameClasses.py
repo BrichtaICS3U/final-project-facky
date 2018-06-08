@@ -1,5 +1,7 @@
+# Get the nessary libaries
 import pygame, math
 
+# Create some colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
@@ -8,7 +10,7 @@ PURPLE = (174, 20, 188)
 
 # This class represents the player. Derives from the "Sprite" class in pygame
 # Code based off of http: //www.101computing.net/creating-sprites-using-pygame/
-# Inheritance learned from: http://thepythonguru.com/python-inheritance-and-polymorphism/ 
+# Inheritance learned from: http://thepythonguru.com/python-inheritance-and-polymorphism/
 
 class Char (pygame.sprite.Sprite) :
 
@@ -59,11 +61,12 @@ class Player (Char) :
         def moveDown (self, pixels) :
                 self.rect.y += pixels
 
+        # Makes so character sprite follow mouse
         def update (self):
                 pos = pygame.mouse.get_pos()
                 xMouse = pos[0]
                 yMouse = pos[1]
-                #Draw player (rectangle)
+                
                 if self.rect.x - xMouse > self.rect.y - yMouse and self.rect.x > xMouse:
                         self.image = self.left
                 elif self.rect.x - xMouse > self.rect.y - yMouse and self.rect.x < xMouse:

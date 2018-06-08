@@ -184,7 +184,6 @@ while menuOn:
             
         Game ()
 
-
     elif level == 3:
         for button in level3_buttons:
             button.draw()
