@@ -5,6 +5,7 @@
 import pygame, sys, math, random
 pygame.init()
 
+# Import nessary classes
 from GameClasses import Player
 from GameClasses import StaffAOE
 from GameClasses import Staff
@@ -12,6 +13,7 @@ from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
 
+# Make the game be a function that can be imported and played
 def Game () :
         # Define some colours
         # Colours are defined using RGB values
@@ -24,6 +26,7 @@ def Game () :
         font = pygame.font.Font(None, 36)
         BROWN = (70, 31, 10)
 
+        # Define screen size
         screenW = 1400
         screenH = 785
 
@@ -139,23 +142,6 @@ def Game () :
         objectList.add (staff, staffAOE)
         itemList.add (staff)
 
-        # Check if staff placed or not
-        active = True
-
-        # Timer of when you need to spawn enemies
-        spawnTime = 0
-        # Check if first wave has passed
-        passedFirstWave = 0
-
-        # A cooldown event and boolean to see it's state
-        cooldownEvent = pygame.USEREVENT
-        cooled = True
-
-        # This loop will continue until the user exits the game
-        carryOn = True
-        clock = pygame.time.Clock ()
-        GameOver = False
-
         #---------Main Program Loop----------
         while carryOn:
 
@@ -172,8 +158,6 @@ def Game () :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
-                
-                # - WASD controls
                 if keys [pygame.K_a] :
                         player.moveLeft (5)
                         aText = demonFont.render ('', True, BLACK)
@@ -250,6 +234,7 @@ def Game () :
                         
                 elif waveSpeed == 1000 :
                         print ("Your free!")
+                        carryOn = False
                 
                 # - Enemies charge to player
                 for enemy in enemyList :
@@ -322,7 +307,6 @@ def Game () :
                 for fireball in projectileList :
                         # Creates a collision list for enemies
                         enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False, pygame.sprite.collide_mask)
-                        enemyKilled = 0
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
                                 badboi.health -= 1
@@ -361,6 +345,7 @@ def Game () :
                 screen.blit (devil3Text, devil3TextRect)
                 screen.blit (hitMarker, hitMarkerRect)
 
+                # - Update kill count
                 killCountText = demonFont.render (str(killCount), True, RED)
 
                 # - Health Bar

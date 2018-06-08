@@ -6,6 +6,8 @@
 
 # Import the pygame library and initialise the game engine
 import pygame, sys, math
+
+# Import
 from ButtonClass import Button
 from GamePlay import Game
 
@@ -66,21 +68,6 @@ def my_settings_function():
     global level
     level += 2
 
-def my_sound_function():
-    """A function that retreats to the previous level"""
-    global level
-    level += 1
-
-def my_sound_on_function():
-    """A function that retreats to the previous level"""
-    global level
-    level += 0
-
-def my_sound_off_function():
-    """A function that retreats to the previous level"""
-    global level
-    level += 0
-
 def my_music_function():
     """A function that retreats to the previous level"""
     global level
@@ -89,6 +76,7 @@ def my_music_function():
 def my_music_on_function():
     """A function that retreats to the previous level"""
     global level
+    global playSong
     level += 0
     pygame.mixer.music.play(-1)
 
@@ -137,9 +125,6 @@ button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function, bg
 button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function, bg=(255, 0, 0)) #level 3
 button_03 = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(255, 0, 0)) #level 1
 button_04 = Button("Settings", (SCREENWIDTH/2, SCREENHEIGHT/2), my_settings_function, bg=(86, 184, 255)) #level 1
-button_05 = Button("Sound", (SCREENWIDTH/2, SCREENHEIGHT/2), my_sound_function, bg=(255, 0, 0)) #level 3
-button_06 = Button("Sound On", (SCREENWIDTH/2, SCREENHEIGHT/3), my_sound_on_function, bg=(255, 0, 0)) #level 4
-button_07 = Button("Sound Off", (SCREENWIDTH/2, SCREENHEIGHT/2), my_sound_off_function, bg=(255, 0, 0)) #level 4
 button_08 = Button("Music", (SCREENWIDTH/2, SCREENHEIGHT/3), my_music_function, bg=(255, 0, 0)) #level 3
 button_09 = Button("Music On", (SCREENWIDTH/2, SCREENHEIGHT/3), my_music_on_function, bg=(255, 0, 0)) #level 5
 button_10 = Button("Music Off", (SCREENWIDTH/2, SCREENHEIGHT/2), my_music_off_function, bg=(255, 0, 0)) #level 5
