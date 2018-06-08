@@ -84,7 +84,7 @@ def my_sound_off_function():
 def my_music_function():
     """A function that retreats to the previous level"""
     global level
-    level += 2
+    level += 1
 
 def my_music_on_function():
     """A function that retreats to the previous level"""
@@ -129,16 +129,6 @@ def mousebuttondown(level):
             if button.rect.collidepoint(pos):
                 button.call_back()
 
-    elif level == 5:
-        for button in level5_buttons:
-            if button.rect.collidepoint(pos):
-                button.call_back()
-
-    elif Game.gameOver == True and level == 6:
-        for button in level6_buttons:
-            if button.rect.collidepoint(pos):
-                button.call_back()
-
 level = 1
 menuOn = True
 
@@ -158,10 +148,8 @@ button_11 = Button("Confirm", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_confirm_func
 #arrange button groups depending on level
 level1_buttons = [button_01, button_03, button_04]
 level2_buttons = [button_02, button_03]
-level3_buttons = [button_02, button_05, button_08]
-level4_buttons = [button_06, button_07, button_11]
-level5_buttons = [button_09, button_10, button_11]
-level6_buttons = [button_01, button_03]
+level3_buttons = [button_02, button_08]
+level4_buttons = [button_09, button_10, button_11]
 
 # The clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
@@ -206,20 +194,7 @@ while menuOn:
         if playSong == False:
             pygame.mixer.music.pause()
         else:
-            pygame.mixer.music.play(-1)
-
-        Game (background)
-        
-##        if songA == True and songB == False :
-##            pygame.mixer.music.load('MainTheme.mp3')
-##            pygame.mixer.music.play(0)
-##            songA = False
-##            songB = True
-##
-##        elif songA == False and songB == True:
-##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
-##            pygame.mixer.music.play(-1)
-        
+            pygame.mixer.music.play(-1)        
         Game ()
 
 
@@ -230,15 +205,6 @@ while menuOn:
     elif level == 4:
         for button in level4_buttons:
             button.draw()
-
-    elif level == 5:
-        for button in level5_buttons:
-            button.draw()
-
-    elif Game.gameOver == True:
-        if level == 6:
-            for button in level6_buttons:
-                button.draw()
             
     # Text
     screen.blit(textSurfaceTitle, textRectTitle)
