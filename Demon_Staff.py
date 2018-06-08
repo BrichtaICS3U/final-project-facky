@@ -39,8 +39,8 @@ pygame.display.set_caption("Demon Staff")
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 75)
-textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
+fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 120)
+textSurfaceTitle = fontTitle.render('Demon Staff', True, PURPLE) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
 background = pygame.image.load('Demon Staff - Logo.png')
@@ -209,6 +209,19 @@ while menuOn:
             pygame.mixer.music.play(-1)
 
         Game (background)
+        
+##        if songA == True and songB == False :
+##            pygame.mixer.music.load('MainTheme.mp3')
+##            pygame.mixer.music.play(0)
+##            songA = False
+##            songB = True
+##
+##        elif songA == False and songB == True:
+##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
+##            pygame.mixer.music.play(-1)
+        
+        Game ()
+
 
     elif level == 3:
         for button in level3_buttons:
