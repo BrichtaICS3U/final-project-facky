@@ -1,7 +1,7 @@
 # Pygame Template File
 # adapted from http://www.101computing.net/getting-started-with-pygame/
 
-# Work Sited
+# Work Cited
 # Dragon Ball Music https://www.youtube.com/watch?v=PkgfX6UaQU8&t=28s
 
 # Import the pygame library and initialise the game engine
@@ -35,7 +35,6 @@ SCREENHEIGHT = 785
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Demon Staff")
-background = pygame.image.load('Demon Staff - Background.png')
 
 # --- Text elements
 
@@ -44,12 +43,13 @@ fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 75)
 textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
+background = pygame.image.load('Demon Staff - Logo.png')
 playSong = True
 
 def my_next_function():
     """A function that advances to the next level"""
     global level
-    level += 1
+    level = 2
 
 def my_previous_function():
     """A function that retreats to the previous level"""
@@ -134,11 +134,14 @@ def mousebuttondown(level):
             if button.rect.collidepoint(pos):
                 button.call_back()
 
+    elif Game.gameOver == True and level == 6:
+        for button in level6_buttons:
+            if button.rect.collidepoint(pos):
+                button.call_back()
+
 level = 1
 menuOn = True
-songA = True
-songB = False
-song = True
+
 #create button objects
 button_01 = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_next_function, bg=(50, 200, 20)) #level 1
 button_02 = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_previous_function, bg=(255, 0, 0)) #level 3
@@ -158,6 +161,7 @@ level2_buttons = [button_02, button_03]
 level3_buttons = [button_02, button_05, button_08]
 level4_buttons = [button_06, button_07, button_11]
 level5_buttons = [button_09, button_10, button_11]
+level6_buttons = [button_01, button_03]
 
 # The clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
@@ -183,7 +187,7 @@ while menuOn:
 
     # Clear the screen to white
     screen.fill(BROWN)
-##    screen.blit(background, (0, 0))
+    screen.blit(background, (0, 0))
 
     # Queue shapes to be drawn
     
@@ -196,7 +200,6 @@ while menuOn:
         #gameOn = True
         for button in level2_buttons:
             button.draw()
-##        pygame.mixer.music.stop()
         pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
         pygame.mixer.music.play(-1)
 
@@ -205,20 +208,7 @@ while menuOn:
         else:
             pygame.mixer.music.play(-1)
 
-        
-##        if songA == True and songB == False :
-##            pygame.mixer.music.load('MainTheme.mp3')
-##            pygame.mixer.music.play(0)
-##            songA = False
-##            songB = True
-##
-##        elif songA == False and songB == True:
-##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
-##            pygame.mixer.music.play(-1)
-        
         Game (background)
-        #screen.blit(background, (0, 0))
-
 
     elif level == 3:
         for button in level3_buttons:
@@ -232,6 +222,11 @@ while menuOn:
         for button in level5_buttons:
             button.draw()
 
+    elif Game.gameOver == True:
+        if level == 6:
+            for button in level6_buttons:
+                button.draw()
+            
     # Text
     screen.blit(textSurfaceTitle, textRectTitle)
 

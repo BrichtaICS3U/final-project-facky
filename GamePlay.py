@@ -11,7 +11,25 @@ from GameClasses import Staff
 from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
-                        
+
+def draw_game_over(screen):
+
+        BROWN = (84, 31, 10)
+        BLACK = (0, 0, 0)
+        WHITE = (255, 255, 255)
+
+        pygame.draw.rect(screen, BROWN, (200, 200, 300, 100), 0) #Draw a white box for the text to sit in
+
+        font = pygame.font.Font(None, 36) #Choose the font for the text
+        text = font.render("Game Over!", 1, BLACK) #Create the text for "GAME OVER"
+        screen.blit(text, (280, 220)) #Draw the text on the screen
+        text = font.render("You hit the other player!", 1, BLACK) #Create the text for "You hit the other player"
+        screen.blit(text, (210, 260)) #Draw the text on the screen
+
+        font = pygame.font.Font(None, 28) #Make the font a bit smaller for this bit
+        text = font.render("Press P to play again. Press E to quit the game.", 1, WHITE) #Create text for instructions on what to do now
+        screen.blit(text, (100, 350)) #Draw the text on the screen
+                       
 def Game (background) :
         # Define some colours
         # Colours are defined using RGB values
@@ -21,6 +39,7 @@ def Game (background) :
         RED = (255, 0, 0)
         PURPLE = (174, 20, 188)
         BROWN = (84, 31, 10)
+        font = pygame.font.Font(None, 36)
 
         screenW = 1400
         screenH = 785
@@ -29,8 +48,6 @@ def Game (background) :
         size = (screenW, screenH)
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
-##        screen.blit(background, (0, 0))
-        #background = pygame.image.load('Demon Staff - Background.png')
 
         # - Create some tutorial text on the floor of the game
         demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
@@ -108,7 +125,7 @@ def Game (background) :
         # This loop will continue until the user exits the game
         carryOn = True
         clock = pygame.time.Clock ()
-        pause = False
+        GameOver = False
 
         #---------Main Program Loop----------
         while carryOn:
@@ -125,18 +142,6 @@ def Game (background) :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
-
-                #pause key
-##                if event.type == pygame.KEYDOWN:
-##                        if event.key == pygame.K_ESCAPE and pause == False:
-##                                pause = True
-##                        if event.key == pygame.K_ESCAPE and pause == True:
-##                                pause == False
-
-##                if pause == True:
-##                        paused()
-
-##                elif pause == False:
                 
                 # - WASD controls
                 if keys [pygame.K_a] :
@@ -221,9 +226,13 @@ def Game (background) :
 
                 # - Ends game when player runs out of health
                 if player.health <= 0 :
-                        carryOn = False
-                        print("GAME OVER!!!")
-
+                        gameOver = True
+                        if gameOver == True:
+                                text = font.render("Game Over", True, WHITE)
+                                text_rect = text.get_rect()
+                                text_x = screen.get_width() / 2 - text_rect.width / 2
+                                text_y = screen.get_height() / 2 - text_rect.height / 2
+                                screen.blit(text, [text_x, text_y])
                 # - Blessing zone to allow player to use magic,
                 # Code based off: https://stackoverflow.com/questions/34054248/pygame-circle-and-its-associated-rect-for-collision-detection
 
