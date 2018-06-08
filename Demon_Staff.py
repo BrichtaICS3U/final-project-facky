@@ -62,17 +62,17 @@ def my_quit_function():
     sys.exit()
 
 def my_settings_function():
-    """A function that retreats to the previous level"""
+    """A function that go to the setting screen"""
     global level
     level += 2
 
 def my_music_function():
-    """A function that retreats to the previous level"""
+    """A function that goes to the music screen where you can change the music options"""
     global level
     level += 1
 
 def my_music_on_function():
-    """A function that retreats to the previous level"""
+    """A function that turns on the game music"""
     global level
     global playSong
     level += 0
@@ -80,7 +80,7 @@ def my_music_on_function():
     playSong = True
 
 def my_music_off_function():
-    """A function that retreats to the previous level"""
+    """A function that turns off the game music"""
     global level
     global playSong
     level += 0
@@ -157,12 +157,14 @@ while menuOn:
     # --- Draw code goes here
 
     # Clear the screen to white
+    #Loads background and logo
     screen.fill(BROWN)
     screen.blit(background, (0, 0))
 
     # Queue shapes to be drawn
     
     # Buttons
+    #Loads the different menu levels with all of the buttons
     if level == 1:
         for button in level1_buttons:
             button.draw()
@@ -179,7 +181,8 @@ while menuOn:
 
         elif playSong == True:
             pygame.mixer.music.play(-1)
-            
+
+        #Loads the actual game           
         Game ()
 
 
@@ -192,6 +195,7 @@ while menuOn:
             button.draw()
             
     # Text
+    #Loads the text for the title screen
     screen.blit(textSurfaceTitle, textRectTitle)
 
     # Update the screen with queued shapes
