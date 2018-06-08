@@ -12,7 +12,7 @@ from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
                         
-def Game (background) :
+def Game () :
         # Define some colours
         # Colours are defined using RGB values
         BLACK = (0, 0, 0)
@@ -20,7 +20,7 @@ def Game (background) :
         GREEN = (0, 255, 0)
         RED = (255, 0, 0)
         PURPLE = (174, 20, 188)
-        BROWN = (84, 31, 10)
+        BROWN = (70, 31, 10)
 
         screenW = 1400
         screenH = 785
@@ -30,8 +30,12 @@ def Game (background) :
 
         # Timer of when you need to spawn enemies
         spawnTime = 0
+        waveSpeed = 0
+        
         # Check if first wave has passed
-        passedFirstWave = 0
+        passedFirstWave = False
+
+        pressedE = False
 
         # A cooldown event and boolean to see it's state
         cooldownEvent = pygame.USEREVENT
@@ -48,58 +52,54 @@ def Game (background) :
         size = (screenW, screenH)
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
-##        screen.blit(background, (0, 0))
-        #background = pygame.image.load('Demon Staff - Background.png')
 
+        
         pygame.mouse.set_visible (False)
-
         hitMarker = pygame.image.load ('hitMarker.png')
         hitMarker = pygame.transform.scale(hitMarker, (50, 50))
         hitMarkerRect = hitMarker.get_rect ()
 
         # - Create some tutorial text on the floor of the game
         demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
+        demonFont2 = pygame.font.Font ('DemonsAndDarlings.ttf',48)
         # W
-        wText = demonFont.render('W', True, BLACK)
+        wText = demonFont.render('W', True, RED)
         wTextRect = wText.get_rect()
         wTextRect.center = (screenW/2, screenH/3)
         # S 
-        sText = demonFont.render('S', True, BLACK)
+        sText = demonFont.render('S', True, RED)
         sTextRect = sText.get_rect()
-        sTextRect.center = (screenW/2, screenH/1.5)
+        sTextRect.center = (screenW/2, screenH * 3/4)
         # A
-        aText = demonFont.render('A', True, BLACK)
+        aText = demonFont.render('A', True, RED)
         aTextRect = aText.get_rect()
         aTextRect.center = (screenW/4, screenH/2)
         # D
-        dText = demonFont.render('D', True, BLACK)
+        dText = demonFont.render('D', True, RED)
         dTextRect = dText.get_rect()
         dTextRect.center = (screenW * 3/4, screenH/2)
         # The press e buttom
-        eText = demonFont.render('', True, BLACK)
+        eText = demonFont.render('', True, RED)
         eTextRect = eText.get_rect()
-        # SpaceBar
-        spacebarText = demonFont.render('', True, BLACK)
-        spacebarTextRect = spacebarText.get_rect ()
+        # SpaceBar tutorial text
+        devilText = demonFont2.render('Get close...', True, PURPLE)
+        devilTextRect = devilText.get_rect ()
+        devilTextRect.center = (200, 450)
 
-        devilText = demonFont.render('Get close...', True, BLACK)
-        devilTextRect = spacebarText.get_rect ()
-        devilTextRect.center = (400, 100)
+        devil2Text = demonFont2.render('and hold that staff...', True, PURPLE)
+        devil2TextRect = devil2Text.get_rect ()
+        devil2TextRect.center = (500, 550)
 
-        devil2Text = demonFont.render('and hold that staff...', True, BLACK)
-        devil2TextRect = spacebarText.get_rect ()
-        devil2TextRect.center = (250, 300)
-
-        devil3Text = demonFont.render('do it with Spacebar!', True, BLACK)
-        devil3TextRect = spacebarText.get_rect ()
-        devil3TextRect.center = (screenW//3, 500)
+        devil3Text = demonFont2.render('do it with Spacebar!', True, PURPLE)
+        devil3TextRect = devil3Text.get_rect ()
+        devil3TextRect.center = (screenW//2.7, 625)
         
         # The text to tell how many killed
-        killText = demonFont.render ('Slain: ', True, BLACK)
+        killText = demonFont.render ('Slain: ', True, RED)
         killTextRect = killText.get_rect ()
         killTextRect.center = (80, 110)
-        # The counter for the killed
-        killCountText = demonFont.render (str(killCount), True, BLACK)
+        # The text counter for the killed
+        killCountText = demonFont.render (str(killCount), True, RED)
         killCountTextRect = killCountText.get_rect ()
         killCountTextRect.center = (180, 110)
 
@@ -116,7 +116,7 @@ def Game (background) :
         player.rect.center = (screenW//2, screenH//2)
 
         staff = Staff (PURPLE, 0, 0)
-        staff.rect.center = (screenW//3, screenH//2)
+        staff.rect.center = (screenW/8, screenH-160)
 
         staffAOE = StaffAOE (PURPLE, 300, 300, 300//2)
         staffAOE.rect.center = staff.rect.center
@@ -156,18 +156,6 @@ def Game (background) :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
-
-                #pause key
-##                if event.type == pygame.KEYDOWN:
-##                        if event.key == pygame.K_ESCAPE and pause == False:
-##                                pause = True
-##                        if event.key == pygame.K_ESCAPE and pause == True:
-##                                pause == False
-
-##                if pause == True:
-##                        paused()
-
-##                elif pause == False:
                 
                 # - WASD controls
                 if keys [pygame.K_a] :
@@ -196,24 +184,31 @@ def Game (background) :
                         
                         if keys [pygame.K_SPACE] :
                                 item.moveWithPlayer (player)
-                                staffAOE.updateAOE (staff)
                                 staffAOE.kill ()
+                                
+                                devilText = demonFont2.render('', False, RED)
+                                devil2Text = demonFont2.render('', False, RED)
+                                devil3Text = demonFont2.render('', False, RED)
+                                
                                 active = False # Makes so can't use magic
 
                         else :
                                 staffAOE.updateAOE (staff)
                                 staffAOE.add (objectList)
                                 staffAOE.add (spriteList)
+                                
                                 active = True # When placed down again, can use magic again
 
                 # - Creates random amount of enemies in random locations
-                if spawnTime == 1000 :
+                if spawnTime == 1000 - waveSpeed :
+                        
                         amount = 0
-                        if passedFirstWave == 0 :
+                        
+                        if passedFirstWave == False :
                                 amount = 1
                                 print ("how many:", amount)
                         else :
-                                amount = random.randint (0, 5)
+                                amount = random.randint (1, 6)
                                 print ("how many:", amount-1)
                                 
                         for badguy in range (amount) :
@@ -234,8 +229,11 @@ def Game (background) :
                                 spriteList.add (badguy)
                                 
                         spawnTime = 0
-                        passedFirstWave = 1 
-                
+                        waveSpeed += 5
+                        passedFirstWave = True
+                        
+                elif waveSpeed == 1000 :
+                        print ("Your free!")
                 
                 # - Enemies charge to player
                 for enemy in enemyList :
@@ -270,15 +268,11 @@ def Game (background) :
                 AOEDistance = math.hypot (x1 - x2, y1 - y2)
                 if AOEDistance < staffAOE.radius and active == True :
 
-                        eText = demonFont.render('Press E', True, BLACK)
-<<<<<<< HEAD
-                        eTextRect.center = (player.rect.x - 10, player.rect.y - 30) 
-=======
+                        eText = demonFont.render('Press E', True, RED)
                         eTextRect.center = (player.rect.x, player.rect.y - 70)
 
-                        spacebarText = demonFont.render('Hold SpaceBar', True, BLACK)
-                        spacebarTextRect.center = (staff.rect.x - 100, staff.rect.y) 
->>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
+                        if pressedE == True :
+                                eText = demonFont.render('', False, RED)
 
                         # Checks pressed e
                         if keys [pygame.K_e] :
@@ -298,12 +292,16 @@ def Game (background) :
                                         spriteList.add (fireBall)
                                         projectileList.add (fireBall)
 
+                                        eText = demonFont.render('', False, RED)
+
                                         cooled = False
+                                        pressedE = True
 
                                         # Start cooldown timer
                                         pygame.time.set_timer (cooldownEvent, 3000)
+                                        
                 else :
-                        eText = demonFont.render ("", True, BLACK)
+                        eText = demonFont.render('', False, RED)
                         
                 # Check for every fireball projectile
                 for fireball in projectileList :
@@ -320,13 +318,7 @@ def Game (background) :
 
                                 if badboi.health <= 0 :
                                         badboi.kill ()
-<<<<<<< HEAD
                                         killCount += 1
-=======
-                                        enemyKilled = enemyKilled + 1
-                                print("Score:", enemyKilled)
-                                        
->>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
 
                         # When goes off screen, remove fireball
                         if fireball.rect.x < 0 or fireball.rect.x > screenW or fireball.rect.y < 0 or fireball.rect.y > screenH :
@@ -336,7 +328,6 @@ def Game (background) :
 
                 # - Clear the screen to white
                 screen.fill(BROWN)
-##                screen.blit(background, (0, 0))
 
                 # Queue different shapes and lines to be drawn
                 # - Draw all sprites
@@ -348,7 +339,6 @@ def Game (background) :
                 screen.blit (aText, aTextRect)
                 screen.blit (dText, dTextRect)
                 screen.blit (eText, eTextRect)
-                screen.blit (spacebarText, spacebarTextRect)
                 screen.blit (killText, killTextRect)
                 screen.blit (killCountText, killCountTextRect)
                 screen.blit (devilText, devilTextRect)
@@ -356,15 +346,10 @@ def Game (background) :
                 screen.blit (devil3Text, devil3TextRect)
                 screen.blit (hitMarker, hitMarkerRect)
 
-
-                killCountText = demonFont.render (str(killCount), True, BLACK)
+                killCountText = demonFont.render (str(killCount), True, RED)
 
                 # - Health Bar
-<<<<<<< HEAD
-                pygame.draw.rect (screen, BLACK, [5, 5, 250 + 10, 60], 10)
-=======
-                pygame.draw.rect (screen, BLACK, [5, 5, 210, 60], 10)
->>>>>>> a0eef30612987c930abee4b56e36f0ee3521357b
+                pygame.draw.rect (screen, BLACK, [5, 5, 200 + 10, 60], 10)
                 pygame.draw.rect (screen, GREEN, [10, 10, player.health * 50, 50])
 
                 # Update the screen with queued shapes

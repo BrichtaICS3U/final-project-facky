@@ -35,13 +35,12 @@ SCREENHEIGHT = 785
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Demon Staff")
-background = pygame.image.load('Demon Staff - Background.png')
 
 # --- Text elements
 
 # Define text for title of game
-fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 75)
-textSurfaceTitle = fontTitle.render('Demon Staff', True, BLACK) 
+fontTitle = pygame.font.Font('DemonsAndDarlings.ttf', 120)
+textSurfaceTitle = fontTitle.render('Demon Staff', True, PURPLE) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (SCREENWIDTH/2, SCREENHEIGHT/6)   # place the centre of the text
 playSong = True
@@ -216,8 +215,7 @@ while menuOn:
 ##            pygame.mixer.music.load('Dragon Ball Super OST - Saiyan Pride (Original CD) [HD].mp3')
 ##            pygame.mixer.music.play(-1)
         
-        Game (background)
-        #screen.blit(background, (0, 0))
+        Game ()
 
 
     elif level == 3:
