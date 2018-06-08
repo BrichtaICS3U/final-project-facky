@@ -6,6 +6,8 @@
 
 # Import the pygame library and initialise the game engine
 import pygame, sys, math
+
+# Import
 from ButtonClass import Button
 from GamePlay import Game
 
@@ -184,7 +186,6 @@ while menuOn:
 
         #Loads the actual game           
         Game ()
-
 
     elif level == 3:
         for button in level3_buttons:

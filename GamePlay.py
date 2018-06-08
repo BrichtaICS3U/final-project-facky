@@ -5,6 +5,7 @@
 import pygame, sys, math, random
 pygame.init()
 
+# Import nessary classes to use for game
 from GameClasses import Player
 from GameClasses import StaffAOE
 from GameClasses import Staff
@@ -12,6 +13,7 @@ from GameClasses import Enemy
 from GameClasses import FireBall
 from GameClasses import EnemySpawner
 
+# Make the game be a function that can be imported and played
 def Game () :
         # Define some colours
         # Colours are defined using RGB values
@@ -24,6 +26,7 @@ def Game () :
         font = pygame.font.Font(None, 36)
         BROWN = (70, 31, 10)
 
+        # Define screen size
         screenW = 1400
         screenH = 785
 
@@ -37,12 +40,14 @@ def Game () :
         # Check if first wave has passed
         passedFirstWave = False
 
+        # Checked if already pressed e
         pressedE = False
 
         # A cooldown event and boolean to see it's state
         cooldownEvent = pygame.USEREVENT
         cooled = True
 
+        # To count the demons you've slain
         killCount = 0
 
         # This loop will continue until the user exits the game
@@ -55,6 +60,9 @@ def Game () :
         screen = pygame.display.set_mode (size)
         pygame.display.set_caption("Demon Staff")
         pygame.mouse.set_visible (False)
+
+        # Replace mouse with aiming redicule
+        # Image from: https://www.frankerfacez.com/emoticon/37517-hitmarker
         hitMarker = pygame.image.load ('hitMarker.png')
         hitMarker = pygame.transform.scale(hitMarker, (50, 50))
         hitMarkerRect = hitMarker.get_rect ()
@@ -62,26 +70,26 @@ def Game () :
         # - Create some tutorial text on the floor of the game
         demonFont = pygame.font.Font('DemonsAndDarlings.ttf', 64)
         demonFont2 = pygame.font.Font ('DemonsAndDarlings.ttf',48)
-        # W
+        # - W
         wText = demonFont.render('W', True, RED)
         wTextRect = wText.get_rect()
         wTextRect.center = (screenW/2, screenH/3)
-        # S 
+        # - S 
         sText = demonFont.render('S', True, RED)
         sTextRect = sText.get_rect()
         sTextRect.center = (screenW/2, screenH * 3/4)
-        # A
+        # - A
         aText = demonFont.render('A', True, RED)
         aTextRect = aText.get_rect()
         aTextRect.center = (screenW/4, screenH/2)
-        # D
+        # - D
         dText = demonFont.render('D', True, RED)
         dTextRect = dText.get_rect()
         dTextRect.center = (screenW * 3/4, screenH/2)
-        # The press e buttom
+        #- The press e buttom
         eText = demonFont.render('', True, RED)
         eTextRect = eText.get_rect()
-        # SpaceBar tutorial text
+        # - SpaceBar tutorial text
         devilText = demonFont2.render('Get close...', True, PURPLE)
         devilTextRect = devilText.get_rect ()
         devilTextRect.center = (200, 450)
@@ -139,27 +147,13 @@ def Game () :
         objectList.add (staff, staffAOE)
         itemList.add (staff)
 
-        # Check if staff placed or not
-        active = True
-
-        # Timer of when you need to spawn enemies
-        spawnTime = 0
-        # Check if first wave has passed
-        passedFirstWave = 0
-
-        # A cooldown event and boolean to see it's state
-        cooldownEvent = pygame.USEREVENT
-        cooled = True
-
-        # This loop will continue until the user exits the game
-        carryOn = True
-        clock = pygame.time.Clock ()
-        GameOver = False
-
         #---------Main Program Loop----------
         while carryOn:
 
+                # - Start the spawn timer
                 spawnTime += 1
+
+                # - Make the aiming redicule to follow mouse
                 hitMarkerRect.center = pygame.mouse.get_pos ()
 
                 # --- Main event loop ---
@@ -172,8 +166,6 @@ def Game () :
 
                 # - WASD controls
                 keys = pygame.key.get_pressed ()
-                
-                # - WASD controls
                 if keys [pygame.K_a] :
                         player.moveLeft (5)
                         aText = demonFont.render ('', True, BLACK)
@@ -195,13 +187,17 @@ def Game () :
                 hurtList = pygame.sprite.spritecollide (player, enemyList , False, pygame.sprite.collide_mask)
                 pickUpList = pygame.sprite.spritecollide (player, itemList, False, pygame.sprite.collide_mask)
 
-                # - Moves staff when presing and holding space
+                # - Moves staff when presing and holding spacebar
                 for item in pickUpList :
-                        
+
+                        # Checked if pressed spacebar
                         if keys [pygame.K_SPACE] :
+
+                                # You pick up staff and move it 
                                 item.moveWithPlayer (player)
                                 staffAOE.kill ()
-                                
+
+                                # Removes the tutorial text
                                 devilText = demonFont2.render('', False, RED)
                                 devil2Text = demonFont2.render('', False, RED)
                                 devil3Text = demonFont2.render('', False, RED)
@@ -209,24 +205,28 @@ def Game () :
                                 active = False # Makes so can't use magic
 
                         else :
+                                # When done moving, place it
                                 staffAOE.updateAOE (staff)
                                 staffAOE.add (objectList)
                                 staffAOE.add (spriteList)
                                 
                                 active = True # When placed down again, can use magic again
 
-                # - Creates random amount of enemies in random locations
+                # - Creates random amount of enemies in random corners
                 if spawnTime == 1000 - waveSpeed :
-                        
+
+                        # Sets amount of enemy to spawn
                         amount = 0
-                        
+
+                        # First wave always one enemy
                         if passedFirstWave == False :
                                 amount = 1
                                 print ("how many:", amount)
                         else :
                                 amount = random.randint (1, 6)
                                 print ("how many:", amount-1)
-                                
+
+                        # Loop to spawn and place enemies        
                         for badguy in range (amount) :
                         
                                 badguy = Enemy (RED, 0, 0, 4, 3)
@@ -243,13 +243,16 @@ def Game () :
                                         
                                 enemyList.add (badguy)
                                 spriteList.add (badguy)
-                                
+
+                        # When done spawning, make the time shorter                                
                         spawnTime = 0
                         waveSpeed += 5
                         passedFirstWave = True
-                        
+
+                # When timer is finally zero, you win
                 elif waveSpeed == 1000 :
                         print ("Your free!")
+                        carryOn = False
                 
                 # - Enemies charge to player
                 for enemy in enemyList :
@@ -283,9 +286,11 @@ def Game () :
                 AOEDistance = math.hypot (x1 - x2, y1 - y2)
                 if AOEDistance < staffAOE.radius and active == True :
 
+                        # Removes the tutorial text
                         eText = demonFont.render('Press E', True, RED)
                         eTextRect.center = (player.rect.x, player.rect.y - 70)
 
+                        # Removes the tutorial text
                         if pressedE == True :
                                 eText = demonFont.render('', False, RED)
 
@@ -307,6 +312,7 @@ def Game () :
                                         spriteList.add (fireBall)
                                         projectileList.add (fireBall)
 
+                                        # Removes the tutorial text
                                         eText = demonFont.render('', False, RED)
 
                                         cooled = False
@@ -316,13 +322,13 @@ def Game () :
                                         pygame.time.set_timer (cooldownEvent, 3000)
                                         
                 else :
+                        # If leaves zone, text disapears
                         eText = demonFont.render('', False, RED)
                         
                 # Check for every fireball projectile
                 for fireball in projectileList :
                         # Creates a collision list for enemies
                         enemyKillList = pygame.sprite.spritecollide (fireball, enemyList, False, pygame.sprite.collide_mask)
-                        enemyKilled = 0
                         # When hits enemy, removes fireball enemies
                         for badboi in enemyKillList :
                                 badboi.health -= 1
@@ -361,6 +367,7 @@ def Game () :
                 screen.blit (devil3Text, devil3TextRect)
                 screen.blit (hitMarker, hitMarkerRect)
 
+                # - Update kill count
                 killCountText = demonFont.render (str(killCount), True, RED)
 
                 # - Health Bar
