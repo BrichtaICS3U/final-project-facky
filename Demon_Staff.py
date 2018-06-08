@@ -79,6 +79,7 @@ def my_music_on_function():
     global playSong
     level += 0
     pygame.mixer.music.play(-1)
+    playSong = True
 
 def my_music_off_function():
     """A function that retreats to the previous level"""
@@ -87,7 +88,6 @@ def my_music_off_function():
     level += 0
     pygame.mixer.music.pause()
     playSong = False
-    print("song off")
     
 def my_confirm_function():
     """A function that retreats to the previous level"""
@@ -178,8 +178,10 @@ while menuOn:
 
         if playSong == False:
             pygame.mixer.music.pause()
-        else:
-            pygame.mixer.music.play(-1)        
+
+        elif playSong == True:
+            pygame.mixer.music.play(-1)
+            
         Game ()
 
 
