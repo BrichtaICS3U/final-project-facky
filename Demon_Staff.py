@@ -14,7 +14,7 @@ from GamePlay import Game
 pygame.init()
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
 pygame.mixer.music.load('DemonStaff_TitleTheme.mp3')
-pygame.mixer.music.play(-1) #-1 means loops for ever, 0 means play just once)
+pygame.mixer.music.play(-1) #-1 means loops forever, 0 means play just once)
 
 # Define some colours
 # Colours are defined using RGB values
